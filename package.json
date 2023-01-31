@@ -22,6 +22,8 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "cheerio": "^1.0.0-rc.12",
+    "express": "^4.17.1",
+    "weak-lru-cache": "^1.2.2"
   }
 }
