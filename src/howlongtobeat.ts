@@ -1,5 +1,6 @@
 export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> {
-    const queryTerms = title.trim().split(' ') 
+    title = title.trim()
+    const queryTerms = title.split(' ') 
 
     const queryJson = {
         searchType: "games",
@@ -30,7 +31,7 @@ export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> 
             'Authority': 'howlongtobeat.com',
             'Content-Type': 'application/json',
             'Origin': 'https://howlongtobeat.com',
-            'Referer': `https://howlongtobeat.com/?q=${encodeURIComponent(title.trim())}`,
+            'Referer': `https://howlongtobeat.com/?q=${encodeURIComponent(title)}`,
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
         },
         body: JSON.stringify(queryJson)
