@@ -1,5 +1,13 @@
+import { cache } from './cache';
+
 export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> {
     title = title.trim()
+
+    const cached = cache.getValue(`query_${title}`)
+    if (isSearchResponse(cached)) {
+        return cached
+    }
+
     const queryTerms = title.split(' ') 
 
     const queryJson = {
@@ -78,6 +86,8 @@ export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> 
         return obj
     })
 
+    cache.setValue(`query_${title}`, convertedResults)
+
     return convertedResults
 }
 
@@ -115,4 +125,12 @@ export interface HLTB_SearchResponse {
         retired: number;
     };
     steamId: number | null;
+}
+
+export function isSearchResponse(obj: any): obj is HLTB_SearchResponse[] {
+    if (!Array.isArray(obj)) {
+        return false
+    }
+
+    return obj.length !== 0 && 'beatTime' in obj[0]
 }
