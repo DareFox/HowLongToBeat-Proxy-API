@@ -1,10 +1,10 @@
 import { cache } from './cache';
 
-export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> {
+export async function queryGames(title: string): Promise<HLTB_QueryResponse[]> {
     title = title.trim()
 
     const cached = cache.getValue(`query_${title}`)
-    if (isSearchResponse(cached)) {
+    if (isQueryResponse(cached)) {
         return cached
     }
 
@@ -46,9 +46,9 @@ export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> 
     })
 
     const json = await response.json()
-    const convertedResults: HLTB_SearchResponse[] = (json.data as any[]).map((gameJson) => {
+    const convertedResults: HLTB_QueryResponse[] = (json.data as any[]).map((gameJson) => {
         const steamID: number | null = (gameJson["profile_steam"] != 0) ? gameJson["profile_steam"] : null
-        const obj: HLTB_SearchResponse = {
+        const obj: HLTB_QueryResponse = {
             gameName: gameJson["game_name"],
             type: gameJson["game_type"],
             gameId: gameJson["game_id"],
@@ -91,7 +91,7 @@ export async function queryGames(title: string): Promise<HLTB_SearchResponse[]> 
     return convertedResults
 }
 
-export interface HLTB_SearchResponse {
+export interface HLTB_QueryResponse {
     gameName: string;
     type: string;
     gameId: number;
@@ -127,7 +127,7 @@ export interface HLTB_SearchResponse {
     steamId: number | null;
 }
 
-export function isSearchResponse(obj: any): obj is HLTB_SearchResponse[] {
+export function isQueryResponse(obj: any): obj is HLTB_QueryResponse[] {
     if (!Array.isArray(obj)) {
         return false
     }
