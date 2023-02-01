@@ -51,7 +51,7 @@ class WeakExpiringLRUCache<K,V>(val maxSize: Int = 1_000_000, val lifetime: Dura
     }
 
     override fun set(key: K, value: V) {
-        checkFullAndFree()
+        freeLastUsedIfFull()
         val current = System.nanoTime()
         map[key] = CacheEntry(
             createdAtNano = current,
@@ -64,7 +64,7 @@ class WeakExpiringLRUCache<K,V>(val maxSize: Int = 1_000_000, val lifetime: Dura
         return size >= maxSize
     }
 
-    private fun checkFullAndFree() {
+    private fun freeLastUsedIfFull() {
         while (isOverflowedOrFull()) {
             val leastUsed = map.entries.sortedBy {
                 it.value.accessedAtNano
