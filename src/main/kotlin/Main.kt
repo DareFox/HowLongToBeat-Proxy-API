@@ -1,7 +1,13 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import cache.WeakExpiringLRUCache
+import org.http4k.server.Jetty
+import org.http4k.server.asServer
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
+import http4k.serverRoutes
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+val cache = WeakExpiringLRUCache<String, String>(10_000, 1.toDuration(DurationUnit.HOURS))
+
+fun main(args: Array<String>) {
+    serverRoutes.asServer(Jetty(1338)).start()
+    readln()
 }
