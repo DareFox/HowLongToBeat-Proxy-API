@@ -24,6 +24,7 @@ dependencies {
     implementation("org.http4k:http4k-format-jackson:$http4kVersion")
     implementation("org.http4k:http4k-client-apache:$http4kVersion")
 
+    implementation("org.slf4j:slf4j-simple:2.0.6")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 }
 
