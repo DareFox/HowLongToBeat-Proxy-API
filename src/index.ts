@@ -1,37 +1,24 @@
 import Fastify from "fastify";
 import { queryGames } from "./hltb/query";
+import { resolve } from "path";
+import * as glob from "glob";
 
 const port = 1337;
-const app = Fastify({
+export const app = Fastify({
     logger: true,
 });
+
+glob.sync("./routes/**/*").forEach((file) => {
+    app.register(require(resolve(file)));
+});
+
+app.register(require("./routes/query"));
 
 app.get("/", async (req, res) => {
     res.send(
         "Sleepin' on a subway. City up above me. Dreamin' up the words to this song. Bettin' on a someday. Wakin' up at someplace. Believe me, baby, I know"
     );
 });
-
-
-app.route<{
-    Querystring: {
-        title: string
-    },
-}>({
-    method: 'GET',
-    url: '/api/query',
-    handler: async (request, reply) => {
-        const title = request.query.title;
-        if (title) {
-            throw Error('test')
-            reply.send(await queryGames(title));
-        } else {
-            reply.status(400).send({
-                message: "No title argument",
-            });
-        }
-    }
-})
 
 const start = async () => {
     try {
