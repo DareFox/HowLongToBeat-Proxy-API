@@ -1,5 +1,4 @@
 import Fastify from "fastify";
-import { queryGames } from "./hltb/query";
 import { resolve } from "path";
 import * as glob from "glob";
 
