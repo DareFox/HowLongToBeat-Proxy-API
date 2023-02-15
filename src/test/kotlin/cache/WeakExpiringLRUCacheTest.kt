@@ -1,16 +1,11 @@
 package cache
 
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.advanceTimeBy
-import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
-import kotlin.test.Ignore
+import org.junit.jupiter.api.Test
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
-import kotlin.time.DurationUnit.*
+import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
 
 class WeakExpiringLRUCacheTest {
@@ -102,7 +97,7 @@ class WeakExpiringLRUCacheTest {
     }
 
     @Test
-    fun testExpire() = runTest {
+    fun testExpire() {
         val cache = createCache(Int.MAX_VALUE, 2.toDuration(SECONDS))
 
         val key = "hehe"
