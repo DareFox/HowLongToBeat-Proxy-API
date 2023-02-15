@@ -63,7 +63,7 @@ class WeakExpiringLRUCache<K,V>(val maxSize: Int = 1_000_000, val lifetime: Dura
     private fun isOverflowedOrFull(): Boolean {
         return size >= maxSize
     }
-    
+
     private fun removeLastUsedUntilNotFull() {
         while (isOverflowedOrFull()) {
             val leastUsed = map.entries.sortedBy {
