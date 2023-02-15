@@ -1,6 +1,7 @@
 package cache
 
 
+import io.github.darefox.hltbproxy.cache.WeakExpiringLRUCache
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

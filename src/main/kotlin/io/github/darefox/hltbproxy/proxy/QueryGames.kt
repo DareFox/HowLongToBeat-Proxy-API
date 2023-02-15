@@ -1,7 +1,7 @@
-package proxy
+package io.github.darefox.hltbproxy.proxy
 
-import cache.getOrGenerateBlockingJson
-import hltb.HLTB
+import io.github.darefox.hltbproxy.cache.getOrGenerateBlockingJson
+import io.github.darefox.hltbproxy.hltb.HLTB
 import org.http4k.core.*
 import org.http4k.format.KotlinxSerialization.json
 import org.http4k.lens.Query

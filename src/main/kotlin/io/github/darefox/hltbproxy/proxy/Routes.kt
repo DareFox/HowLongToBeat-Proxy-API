@@ -1,4 +1,4 @@
-package proxy
+package io.github.darefox.hltbproxy.proxy
 
 import org.http4k.core.Method.GET
 import org.http4k.core.Response

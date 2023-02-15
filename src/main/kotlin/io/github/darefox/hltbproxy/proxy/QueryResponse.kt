@@ -1,6 +1,6 @@
-package proxy
+package io.github.darefox.hltbproxy.proxy
 
-import hltb.HltbGameData
+import io.github.darefox.hltbproxy.hltb.HltbGameData
 import kotlinx.serialization.Serializable
 
 @Serializable

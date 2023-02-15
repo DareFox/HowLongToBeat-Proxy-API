@@ -1,4 +1,4 @@
-package cache
+package io.github.darefox.hltbproxy.cache
 
 import java.util.*
 import kotlin.time.Duration

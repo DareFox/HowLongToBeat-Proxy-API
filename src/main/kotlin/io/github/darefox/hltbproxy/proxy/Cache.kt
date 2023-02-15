@@ -1,6 +1,6 @@
-package proxy
+package io.github.darefox.hltbproxy.proxy
 
-import cache.WeakExpiringLRUCache
+import io.github.darefox.hltbproxy.cache.WeakExpiringLRUCache
 import kotlinx.serialization.json.JsonElement
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration

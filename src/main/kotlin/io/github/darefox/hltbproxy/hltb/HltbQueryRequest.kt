@@ -1,4 +1,4 @@
-package hltb
+package io.github.darefox.hltbproxy.hltb
 
 import kotlinx.serialization.Serializable
 

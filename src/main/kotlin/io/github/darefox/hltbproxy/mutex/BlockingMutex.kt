@@ -1,4 +1,4 @@
-package mutex
+package io.github.darefox.hltbproxy.mutex
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
