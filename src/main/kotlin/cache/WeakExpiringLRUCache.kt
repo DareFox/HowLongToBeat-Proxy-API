@@ -1,11 +1,11 @@
 package cache
 
-import java.util.WeakHashMap
+import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-class WeakExpiringLRUCache<K,V>(val maxSize: Int = 1_000_000, val lifetime: Duration): Cache<K,V> {
+class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Duration) : Cache<K, V> {
     init {
         require(maxSize > 0) {
             "Max size of cache can't be 0 or less"

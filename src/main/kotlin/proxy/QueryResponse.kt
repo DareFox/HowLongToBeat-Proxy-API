@@ -1,7 +1,6 @@
 package proxy
 
 import hltb.HltbGameData
-import hltb.HltbQueryResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -57,7 +56,7 @@ fun HltbGameData.toProxyObj(): QueryGamesResponse {
             all = QueryGamesBeatTimeEntry(compAll, compAllCount),
         ),
         counters = QueryGamesCounters(
-            beated = this.countComp ,
+            beated = this.countComp,
             speedruns = countSpeedrun,
             backlogs = countBacklog,
             retired = countRetired,

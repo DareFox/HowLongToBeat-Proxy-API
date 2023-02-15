@@ -1,6 +1,6 @@
 package cache
 
-interface Cache<K,V> {
+interface Cache<K, V> {
     val size: Int
 
     operator fun set(key: K, value: V)

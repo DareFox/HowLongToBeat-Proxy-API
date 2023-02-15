@@ -1,6 +1,5 @@
 package http4k
 
-import kotlinx.serialization.json.JsonObjectBuilder
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import org.http4k.core.Body
