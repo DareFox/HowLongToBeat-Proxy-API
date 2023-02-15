@@ -15,7 +15,6 @@ val serverRoutes = routes(
                     "Believe me, baby, I know"
         )
     },
-//    "/v1/query" bind GET to {
-//    },
+    "/v1/query" bind GET to queryGames
 )
 
