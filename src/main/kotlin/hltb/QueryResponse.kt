@@ -8,9 +8,8 @@ data class HltbQueryResponse(
     val color: String,
     val title: String,
     val category: String,
-    val count: Long,
     val pageCurrent: Long,
-    val pageTotal: Long,
+    val pageTotal: Long?,
     val pageSize: Long,
     val data: List<HltbGameData>,
 )
