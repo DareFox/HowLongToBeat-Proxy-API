@@ -1,4 +1,4 @@
-package cache
+package io.github.darefox.hltbproxy.cache
 
 interface Cache<K, V> {
     val size: Int

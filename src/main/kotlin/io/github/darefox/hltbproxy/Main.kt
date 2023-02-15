@@ -1,9 +1,8 @@
-import cache.WeakExpiringLRUCache
+package io.github.darefox.hltbproxy
+
 import org.http4k.server.Jetty
 import org.http4k.server.asServer
-import proxy.serverRoutes
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import io.github.darefox.hltbproxy.proxy.serverRoutes
 
 //import proxy.getServerRoutes
 

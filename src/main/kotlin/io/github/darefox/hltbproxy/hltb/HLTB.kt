@@ -1,13 +1,13 @@
-package hltb
+package io.github.darefox.hltbproxy.hltb
 
-import http4k.client
+import io.github.darefox.hltbproxy.http4k.client
 import kotlinx.serialization.Serializable
 import org.http4k.core.Body
 import org.http4k.core.Method.POST
 import org.http4k.core.Request
 import org.http4k.core.Response
 import org.http4k.format.KotlinxSerialization.auto
-import proxy.QueryGamesResponse
+import io.github.darefox.hltbproxy.proxy.QueryGamesResponse
 import java.net.URLEncoder
 
 object HLTB {

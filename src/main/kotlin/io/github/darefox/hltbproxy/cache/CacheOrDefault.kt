@@ -1,12 +1,12 @@
-package cache
+package io.github.darefox.hltbproxy.cache
 
-import jsonKotlinx
+import io.github.darefox.hltbproxy.jsonKotlinx
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.encodeToJsonElement
-import mutex.HashMutex
-import mutex.withLockBlocking
+import io.github.darefox.hltbproxy.mutex.HashMutex
+import io.github.darefox.hltbproxy.mutex.withLockBlocking
 
-fun <K,V> Cache<K,V>.getOrGenerateBlocking(mutexMap: HashMutex<K>, key: K, generator: () -> V): V {
+fun <K,V> Cache<K, V>.getOrGenerateBlocking(mutexMap: HashMutex<K>, key: K, generator: () -> V): V {
     val cached = this[key]
     if (cached != null) return cached
 
@@ -18,7 +18,7 @@ fun <K,V> Cache<K,V>.getOrGenerateBlocking(mutexMap: HashMutex<K>, key: K, gener
     }
 }
 
-inline fun <K, reified V> Cache<K,JsonElement>.getOrGenerateBlockingJson(mutexMap: HashMutex<K>, key: K, crossinline generator: () -> V): JsonElement {
+inline fun <K, reified V> Cache<K, JsonElement>.getOrGenerateBlockingJson(mutexMap: HashMutex<K>, key: K, crossinline generator: () -> V): JsonElement {
     val cached = this[key]
     if (cached != null) return cached
 

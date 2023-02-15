@@ -1,4 +1,4 @@
-package http4k
+package io.github.darefox.hltbproxy.http4k
 
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
