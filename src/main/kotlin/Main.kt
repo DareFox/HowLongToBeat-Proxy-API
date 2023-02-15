@@ -8,5 +8,5 @@ import kotlin.time.toDuration
 //import proxy.getServerRoutes
 
 fun main(args: Array<String>) {
-    serverRoutes.asServer(Jetty(1337))
+    serverRoutes.asServer(Jetty(1337)).start()
 }
