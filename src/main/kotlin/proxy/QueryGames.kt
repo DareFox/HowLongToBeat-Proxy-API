@@ -1,21 +1,25 @@
 package proxy
 
+import cache.getOrGenerateBlockingJson
 import hltb.HLTB
 import org.http4k.core.*
-import org.http4k.format.KotlinxSerialization.auto
+import org.http4k.format.KotlinxSerialization.json
 import org.http4k.lens.Query
 
 val queryGames: HttpHandler = { req ->
-    val nameLens = Query.required("name")
+    val nameLens = Query.required("title")
     val pageLens = Query.defaulted("page", "1")
 
     val name = nameLens(req)
     val page = pageLens(req).toInt()
+    val response = Response(Status.OK)
 
-    val list = HLTB.queryGames(name, page).data.map {
-        it.toProxyObj()
+    val key = "queryGames;$name;$page"
+    val jsonBody = cache.getOrGenerateBlockingJson(mutexMap, key) {
+        HLTB.queryGames(name, page).data.map {
+            it.toProxyObj()
+        }
     }
-    val bodyLens = Body.auto<List<QueryGamesResponse>>().toLens()
 
-    Response(Status.OK).with(bodyLens of list)
+    response.with(Body.json().toLens() of jsonBody)
 }
