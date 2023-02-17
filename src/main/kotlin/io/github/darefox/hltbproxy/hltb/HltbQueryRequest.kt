@@ -56,7 +56,7 @@ data class Users(
     val sortCategory: String,
 )
 
-fun createRequestObj(title: String, page: Int): HltbQueryRequest {
+fun createQueryObj(title: String, page: Int): HltbQueryRequest {
     return HltbQueryRequest(
         searchType = "games",
         searchTerms = title.trim().split(" "),
