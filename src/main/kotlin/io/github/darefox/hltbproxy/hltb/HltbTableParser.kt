@@ -2,7 +2,7 @@ package io.github.darefox.hltbproxy.hltb
 
 import org.jsoup.nodes.Element
 
-class HltbTimeTableParser(private val table: Element) {
+class HltbTableParser(private val table: Element) {
     init {
         val cssClasses = table.classNames()
         val isTable = table.tag().normalName() == "table"
