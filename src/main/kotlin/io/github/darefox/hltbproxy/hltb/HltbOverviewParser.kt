@@ -8,29 +8,29 @@ class HltbOverviewParser(private val html: Document) {
     private val blockDescriptionTitleCssSelector = "div.GameSummary_profile_info__e935c > strong"
     private val dateFormat = SimpleDateFormat("MMMM dd, YYYY")
 
-    val singleplayerTimeTable: HltbTimeTableParser? by lazy {
+    val singleplayerTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
         html.select(selector).firstOrNull() {
             it.tableContainsTitle("Single-Player")
-        }?.let { HltbTimeTableParser(it) }
+        }?.let { HltbTableParser(it) }
     }
-    val multiplayerTimeTable: HltbTimeTableParser? by lazy {
+    val multiplayerTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
         html.select(selector).firstOrNull() {
             it.tableContainsTitle("Multi-Player")
-        }?.let { HltbTimeTableParser(it) }
+        }?.let { HltbTableParser(it) }
     }
 
-    val speedrunTimeTable: HltbTimeTableParser? by lazy {
+    val speedrunTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
         html.select(selector).firstOrNull() {
             it.tableContainsTitle("Speedruns")
-        }?.let { HltbTimeTableParser(it) }
+        }?.let { HltbTableParser(it) }
     }
 
-    val platformTimeTable: HltbTimeTableParser? by lazy {
+    val platformTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GamePlatformTable_game_main_table]"
-        html.select(selector).first()?.let { HltbTimeTableParser(it) }
+        html.select(selector).first()?.let { HltbTableParser(it) }
     }
 
     val platforms: List<String>
