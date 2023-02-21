@@ -34,7 +34,8 @@ data class OverviewInfo(
     val publishers: List<String>,
     val northAmericaRelease: Long?,
     val europeRelease: Long?,
-    val japanRelease: Long?
+    val japanRelease: Long?,
+    val steamId: Long?
 )
 
 fun HltbOverviewParser.toProxy(): OverviewInfo {
@@ -50,6 +51,7 @@ fun HltbOverviewParser.toProxy(): OverviewInfo {
         publishers = publishers,
         northAmericaRelease = northAmericaRelease,
         europeRelease = europeRelease,
-        japanRelease = japanRelease
+        japanRelease = japanRelease,
+        steamId = steamId
     )
 }
