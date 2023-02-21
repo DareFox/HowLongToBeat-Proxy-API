@@ -1,10 +1,14 @@
 package io.github.darefox.hltbproxy.hltb
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class HltbSpeedrunTable(
     val anyPercentage: HltbSpeedrunTime,
     val hundredPercentage: HltbSpeedrunTime,
 )
 
+@Serializable
 data class HltbSpeedrunTime(
     val averageSec: Long?,
     val medianSec: Long?,
