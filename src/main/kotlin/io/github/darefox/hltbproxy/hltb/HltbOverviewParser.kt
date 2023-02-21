@@ -44,21 +44,24 @@ class HltbOverviewParser(private val html: Document) {
 
     val platforms: List<String>
         get() {
-            return getDescByTitleOrNull("Platforms:", "Platform:")!!.split(", ")
+            return getDescByTitleOrNull("Platforms:", "Platform:")?.split(", ")
+                ?: listOf()
         }
     val genres: List<String>
         get() {
-            return getDescByTitleOrNull("Genres:", "Genre:")!!.split(", ")
-
+            return getDescByTitleOrNull("Genres:", "Genre:")?.split(", ")
+                ?: listOf()
         }
 
     val developers: List<String>
         get() {
-            return getDescByTitleOrNull("Developer:", "Developers:")!!.split(", ")
+            return getDescByTitleOrNull("Developer:", "Developers:")?.split(", ")
+                ?: listOf()
         }
     val publishers: List<String>
         get() {
-            return getDescByTitleOrNull("Publisher:", "Publishers:")!!.split(", ")
+            return getDescByTitleOrNull("Publisher:", "Publishers:")?.split(", ")
+                ?: listOf()
         }
 
     val northAmericaRelease: Long?
