@@ -8,10 +8,10 @@ data class HltbSingleplayerTable(
 )
 
 data class HltbSinglePlayerTime(
-    val averageMin: Int?,
-    val medianMin: Int?,
-    val rushedMin: Int?,
-    val leisureMin: Int?
+    val averageSec: Long?,
+    val medianSec: Long?,
+    val rushedSec: Long?,
+    val leisureSec: Long?
 )
 
 fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
@@ -27,10 +27,10 @@ fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String,String>): HltbSinglePlayerTime {
     return HltbSinglePlayerTime(
-        averageMin = column["Average"]?.let { toMinutesOrNull(it) },
-        medianMin = column["Median"]?.let { toMinutesOrNull(it) },
-        rushedMin = column["Rushed"]?.let { toMinutesOrNull(it) },
-        leisureMin = column["Leisure"]?.let { toMinutesOrNull(it) },
+        averageSec = column["Average"]?.let { toSecondsOrNull(it) },
+        medianSec = column["Median"]?.let { toSecondsOrNull(it) },
+        rushedSec = column["Rushed"]?.let { toSecondsOrNull(it) },
+        leisureSec = column["Leisure"]?.let { toSecondsOrNull(it) },
     )
 }
 

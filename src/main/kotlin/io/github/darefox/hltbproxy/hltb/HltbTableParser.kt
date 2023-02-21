@@ -31,14 +31,14 @@ class HltbTableParser(private val table: Element) {
 
     val title = table.select(titleSelector).first()!!.ownText()
 
-    fun toMinutesOrNull(convert: String): Int? {
+    fun toSecondsOrNull(convert: String): Long? {
         val hours = "\\d*(?=h)".toRegex().find(convert)?.value?.toInt()
         val minutes = "\\d*(?=m)".toRegex().find(convert)?.value?.toInt()
-
-        if (minutes == null && hours == null) {
+        val seconds = "\\d*(?=s)".toRegex().find(convert)?.value?.toInt()
+        if (minutes == null && hours == null && seconds == null) {
             return null
         }
 
-        return (hours ?: 0) * 60 + (minutes ?: 0)
+        return ((hours ?: 0) * 60L * 60L) + ((minutes ?: 0) * 60L) + (seconds ?: 0)
     }
 }

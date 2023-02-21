@@ -6,10 +6,10 @@ data class HltbMultiplayerTable(
 )
 
 data class HltbMultiPlayerTime(
-    val averageMin: Int?,
-    val medianMin: Int?,
-    val leastMin: Int?,
-    val mostMin: Int?
+    val averageSec: Long?,
+    val medianSec: Long?,
+    val leastSec: Long?,
+    val mostSec: Long?
 )
 
 fun HltbTableParser.toMultiPlayer(): HltbMultiplayerTable {
@@ -23,9 +23,9 @@ fun HltbTableParser.toMultiPlayer(): HltbMultiplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String,String>): HltbMultiPlayerTime {
     return HltbMultiPlayerTime(
-        averageMin = column["Average"]?.let { toMinutesOrNull(it) },
-        medianMin = column["Median"]?.let { toMinutesOrNull(it) },
-        leastMin = column["Least"]?.let { toMinutesOrNull(it) },
-        mostMin = column["Most"]?.let { toMinutesOrNull(it) },
+        averageSec = column["Average"]?.let { toSecondsOrNull(it) },
+        medianSec = column["Median"]?.let { toSecondsOrNull(it) },
+        leastSec = column["Least"]?.let { toSecondsOrNull(it) },
+        mostSec = column["Most"]?.let { toSecondsOrNull(it) },
     )
 }
