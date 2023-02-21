@@ -1,5 +1,6 @@
 package io.github.darefox.hltbproxy.hltb
 
+import kotlinx.coroutines.selects.select
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.text.SimpleDateFormat
@@ -10,26 +11,21 @@ class HltbOverviewParser(private val html: Document) {
 
     val singleplayerTimeTable: HltbSingleplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        getTable(selector, "Single-Player")?.toSingleplayer()
+        getTable(selector, title = "Single-Player")?.toSingleplayer()
     }
     val multiplayerTimeTable: HltbMultiplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        getTable(selector, "Multi-Player")?.toMultiPlayer()
+        getTable(selector, title = "Multi-Player")?.toMultiPlayer()
     }
 
-    val speedrunTimeTable: HltbTableParser? by lazy {
+    val speedrunTimeTable: HltbSpeedrunTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        val title = "Speedruns"
-        getTable(selector, title)
+        getTable(selector, title = "Speedruns")?.toSpeedrun()
     }
 
-    init {
-        println("test")
-    }
-
-    val platformTimeTable: HltbTableParser? by lazy {
+    val platformTimeTable: HltbPlatformTable? by lazy {
         val selector = "table[class*=GamePlatformTable_game_main_table]"
-        html.select(selector).first()?.let { HltbTableParser(it) }
+        getTable(selector, title = "Platform")?.toPlatform()
     }
 
     val platforms: List<String>
