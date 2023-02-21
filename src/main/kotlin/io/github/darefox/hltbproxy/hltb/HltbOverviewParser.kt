@@ -8,6 +8,17 @@ class HltbOverviewParser(private val html: Document) {
     private val blockDescriptionTitleCssSelector = "div.GameSummary_profile_info__e935c > strong"
     private val dateFormat = SimpleDateFormat("MMMM dd, YYYY")
 
+    val title: String by lazy {
+        val selector = "div[class*=GameHeader_profile_header_game]"
+        val titleSelector = "div[class*=GameHeader_profile_header]"
+
+        html
+            .select(selector).first()!!
+            .children()
+            .select(titleSelector).first()!!
+            .ownText()
+    }
+
     val singleplayerTimeTable: HltbSingleplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
         getTable(selector, title = "Single-Player")?.toSingleplayer()
