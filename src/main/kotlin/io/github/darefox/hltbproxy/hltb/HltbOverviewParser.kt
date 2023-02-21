@@ -30,34 +30,31 @@ class HltbOverviewParser(private val html: Document) {
 
     val platforms: List<String>
         get() {
-            val xpath = "/html/body/div[1]/div/main/div[2]/div/div[2]/div[2]/div[3]"
-            return getOwnTextAndSplit(xpath)
+            return getDescByTitleOrNull("Platforms:")!!.split(", ")
         }
     val genres: List<String>
         get() {
-            val xpath = "/html/body/div[1]/div/main/div[2]/div/div[2]/div[2]/div[4]"
-            return getOwnTextAndSplit(xpath)
+            return getDescByTitleOrNull("Genres:")!!.split(", ")
+
         }
 
     val developers: List<String>
         get() {
-            val xpath = "/html/body/div[1]/div/main/div[2]/div/div[2]/div[2]/div[5]"
-            return getOwnTextAndSplit(xpath)
+            return getDescByTitleOrNull("Developer:")!!.split(", ")
         }
     val publishers: List<String>
         get() {
-            val xpath = "/html/body/div[1]/div/main/div[2]/div/div[2]/div[2]/div[6]"
-            return getOwnTextAndSplit(xpath)
+            return getDescByTitleOrNull("Publisher:")!!.split(", ")
         }
 
     val northAmericaRelease: Long?
-        get() = getFirstDateByTitle("NA:")
+        get() = getFirstDateByTitleOrNull("NA:")
 
     val europeRelease: Long?
-        get() = getFirstDateByTitle("EU:")
+        get() = getFirstDateByTitleOrNull("EU:")
 
     val japanRelease: Long?
-        get() = getFirstDateByTitle("JP:")
+        get() = getFirstDateByTitleOrNull("JP:")
 
     private fun getTable(selector: String, title: String): HltbTableParser? {
         return html.select(selector).firstOrNull() {
@@ -73,19 +70,19 @@ class HltbOverviewParser(private val html: Document) {
         return this.tag().normalName() == "table" && titleParsed.equals(title, ignoreCase = true)
     }
 
-    private fun getFirstDateByTitle(title: String): Long {
-        val parent = html.select(blockDescriptionTitleCssSelector).first {
-            it.ownText() == title
-        }.parent()
+    private fun getDescByTitleOrNull(title: String): String? {
+        val selector = "div[class*=GameSummary_profile_info]"
 
-        requireNotNull(parent)
+        return html.select(selector).firstOrNull {
+            val parsedTitle = it.select("strong:nth-child(1)").firstOrNull()?.ownText()
+            parsedTitle == title
+        }?.ownText()
+    }
+    private fun getFirstDateByTitleOrNull(title: String): Long? {
+        val parent = html.select(blockDescriptionTitleCssSelector).firstOrNull {
+            it.ownText() == title
+        }?.parent() ?: return null
 
         return dateFormat.parse(parent.ownText()).time
-    }
-
-    private fun getOwnTextAndSplit(xpath: String): List<String> {
-        val text = requireNotNull(html.selectXpath(xpath).first()).ownText()
-
-        return text.trim().split(", ")
     }
 }
