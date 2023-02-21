@@ -22,11 +22,15 @@ object HLTB {
         return Body.auto<HltbQueryResponse>().toLens().invoke(response)
     }
 
-    fun getOverviewInfoAboutGame(id: Long): HltbOverviewParser {
+    fun getOverviewInfoAboutGame(id: Long): HltbOverviewParser? {
         val url = "https://howlongtobeat.com/game/$id"
         val response = client(Request(GET, url).hltbDefaultHeaders(url, false))
-        val html = Jsoup.parse(response.bodyString())
 
+        if (response.status.code == 404) {
+            return null
+        }
+
+        val html = Jsoup.parse(response.bodyString())
         return HltbOverviewParser(html)
     }
 }
