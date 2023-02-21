@@ -1,13 +1,12 @@
 package io.github.darefox.hltbproxy.hltb
 
 import io.github.darefox.hltbproxy.http4k.client
-import io.github.darefox.hltbproxy.proxy.QueryGamesResponse
-import kotlinx.serialization.Serializable
 import org.http4k.core.Body
+import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
 import org.http4k.core.Request
-import org.http4k.core.Response
 import org.http4k.format.KotlinxSerialization.auto
+import org.jsoup.Jsoup
 import java.net.URLEncoder
 
 object HLTB {
@@ -23,3 +22,11 @@ object HLTB {
         return Body.auto<HltbQueryResponse>().toLens().invoke(response)
     }
 
+    fun getOverviewInfoAboutGame(id: Long): HltbOverviewParser {
+        val url = "https://howlongtobeat.com/game/$id"
+        val response = client(Request(GET, url).hltbDefaultHeaders(url, false))
+        val html = Jsoup.parse(response.bodyString())
+
+        return HltbOverviewParser(html)
+    }
+}
