@@ -1,6 +1,5 @@
 package io.github.darefox.hltbproxy.hltb
 
-import kotlinx.coroutines.selects.select
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.text.SimpleDateFormat
@@ -30,21 +29,21 @@ class HltbOverviewParser(private val html: Document) {
 
     val platforms: List<String>
         get() {
-            return getDescByTitleOrNull("Platforms:")!!.split(", ")
+            return getDescByTitleOrNull("Platforms:", "Platform:")!!.split(", ")
         }
     val genres: List<String>
         get() {
-            return getDescByTitleOrNull("Genres:")!!.split(", ")
+            return getDescByTitleOrNull("Genres:", "Genre:")!!.split(", ")
 
         }
 
     val developers: List<String>
         get() {
-            return getDescByTitleOrNull("Developer:")!!.split(", ")
+            return getDescByTitleOrNull("Developer:", "Developers:")!!.split(", ")
         }
     val publishers: List<String>
         get() {
-            return getDescByTitleOrNull("Publisher:")!!.split(", ")
+            return getDescByTitleOrNull("Publisher:", "Publishers:")!!.split(", ")
         }
 
     val northAmericaRelease: Long?
@@ -70,12 +69,14 @@ class HltbOverviewParser(private val html: Document) {
         return this.tag().normalName() == "table" && titleParsed.equals(title, ignoreCase = true)
     }
 
-    private fun getDescByTitleOrNull(title: String): String? {
+    private fun getDescByTitleOrNull(vararg titles: String): String? {
         val selector = "div[class*=GameSummary_profile_info]"
 
         return html.select(selector).firstOrNull {
             val parsedTitle = it.select("strong:nth-child(1)").firstOrNull()?.ownText()
-            parsedTitle == title
+            titles.any { title ->
+                parsedTitle.equals(title, ignoreCase = true)
+            }
         }?.ownText()
     }
     private fun getFirstDateByTitleOrNull(title: String): Long? {
