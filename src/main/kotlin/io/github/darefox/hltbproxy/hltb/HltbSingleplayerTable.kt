@@ -26,11 +26,11 @@ fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
         mainStory = getVariants(rows["Main Story"]!!),
         extras = getVariants(rows["Main + Extras"]!!),
         completionist = getVariants(rows["Completionist"]!!),
-        allPlaystyles =  getVariants(rows["All PlayStyles"]!!)
+        allPlaystyles = getVariants(rows["All PlayStyles"]!!)
     )
 }
 
-private fun HltbTableParser.getVariants(column: Map<String,String>): HltbSinglePlayerTime {
+private fun HltbTableParser.getVariants(column: Map<String, String>): HltbSinglePlayerTime {
     return HltbSinglePlayerTime(
         polled = column["Polled"]?.toLongOrNull(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },

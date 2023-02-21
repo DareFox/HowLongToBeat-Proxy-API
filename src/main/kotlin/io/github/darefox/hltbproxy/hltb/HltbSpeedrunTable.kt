@@ -26,7 +26,7 @@ fun HltbTableParser.toSpeedrun(): HltbSpeedrunTable {
     )
 }
 
-private fun HltbTableParser.getVariants(column: Map<String,String>): HltbSpeedrunTime {
+private fun HltbTableParser.getVariants(column: Map<String, String>): HltbSpeedrunTime {
     return HltbSpeedrunTime(
         polled = column["Polled"]?.toLongOrNull(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },

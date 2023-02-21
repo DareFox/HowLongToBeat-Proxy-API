@@ -74,7 +74,7 @@ class HltbOverviewParser(private val html: Document) {
         get() = getFirstDateByTitleOrNull("JP:")
 
     private fun getTable(selector: String, title: String): HltbTableParser? {
-        return html.select(selector).firstOrNull() {
+        return html.select(selector).firstOrNull {
             it.tableContainsTitle(title)
         }?.let { HltbTableParser(it) }
     }
@@ -97,6 +97,7 @@ class HltbOverviewParser(private val html: Document) {
             }
         }?.ownText()
     }
+
     private fun getFirstDateByTitleOrNull(title: String): Long? {
         val parent = html.select(blockDescriptionTitleCssSelector).firstOrNull {
             it.ownText() == title
