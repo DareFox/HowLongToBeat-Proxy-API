@@ -30,4 +30,15 @@ class HltbTableParser(private val table: Element) {
     }.toMap()
 
     val title = table.select(titleSelector).first()!!.ownText()
+
+    fun toMinutesOrNull(convert: String): Int? {
+        val hours = "\\d*(?=h)".toRegex().find(convert)?.value?.toInt()
+        val minutes = "\\d*(?=m)".toRegex().find(convert)?.value?.toInt()
+
+        if (minutes == null && hours == null) {
+            return null
+        }
+
+        return (hours ?: 0) * 60 + (minutes ?: 0)
+    }
 }
