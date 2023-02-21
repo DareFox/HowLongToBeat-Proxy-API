@@ -1,9 +1,12 @@
 package io.github.darefox.hltbproxy.proxy
 
+import io.github.darefox.hltbproxy.cache.getOrGenerateBlocking
 import io.github.darefox.hltbproxy.cache.getOrGenerateBlockingJson
 import io.github.darefox.hltbproxy.hltb.*
+import io.github.darefox.hltbproxy.http4k.ErrorResponse
 import kotlinx.serialization.Serializable
 import org.http4k.core.*
+import org.http4k.format.KotlinxSerialization.auto
 import org.http4k.format.KotlinxSerialization.json
 import org.http4k.lens.Query
 
@@ -11,14 +14,13 @@ val getOverviewInfo: HttpHandler = { req ->
     val idLens = Query.required("id")
 
     val id = idLens(req).toLong()
-    val response = Response(Status.OK)
 
     val key = "overviewInfo;$id"
-    val jsonBody = cache.getOrGenerateBlockingJson(mutexMap, key) {
-        HLTB.getOverviewInfoAboutGame(id).toProxy()
+    cache.getOrGenerateBlocking(mutexMap, key) {
+        val obj = HLTB.getOverviewInfoAboutGame(id)?.toProxy()
+            ?: return@getOrGenerateBlocking ErrorResponse(Status.NOT_FOUND, "Not Found")
+        Response(Status.OK).with(Body.auto<OverviewInfo>().toLens() of obj)
     }
-
-    response.with(Body.json().toLens() of jsonBody)
 }
 
 @Serializable
