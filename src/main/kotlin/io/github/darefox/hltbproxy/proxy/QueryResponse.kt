@@ -47,7 +47,7 @@ fun HltbGameData.toProxyObj(): QueryGamesResponse {
         gameId = this.gameId,
         gameImage = this.gameImage,
         dev = this.profileDev,
-        platforms = this.profilePlatform.trim().split(" "),
+        platforms = this.profilePlatform.trim().split(", "),
         releaseYear = this.releaseWorld.toInt(),
         beatTime = QueryGamesBeatTime(
             main = QueryGamesBeatTimeEntry(compMain, compMainCount),
