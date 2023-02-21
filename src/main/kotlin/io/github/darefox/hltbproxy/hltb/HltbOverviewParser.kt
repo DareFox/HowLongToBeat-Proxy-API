@@ -81,11 +81,9 @@ class HltbOverviewParser(private val html: Document) {
                 link?.contains("https://store.steampowered.com") ?: false
             } ?: return null
 
-            if (link == null) {
-                return null
+            return link?.let {
+                "(?<=\\/app\\/)\\d+".toRegex().find(it)?.value?.toLongOrNull()
             }
-
-            return "(?<=\\/app\\/)\\d+".toRegex().find(link!!)?.value?.toLongOrNull()
         }
 
     private fun getTable(selector: String, title: String): HltbTableParser? {
