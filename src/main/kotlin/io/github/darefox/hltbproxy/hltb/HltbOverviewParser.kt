@@ -1,12 +1,16 @@
 package io.github.darefox.hltbproxy.hltb
 
+import io.github.darefox.hltbproxy.parse
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.text.SimpleDateFormat
 
 class HltbOverviewParser(private val html: Document) {
     private val blockDescriptionTitleCssSelector = "div.GameSummary_profile_info__e935c > strong"
-    private val dateFormat = SimpleDateFormat("MMMM dd, YYYY")
+    private val dateFormat = listOf(
+        SimpleDateFormat("MMMM dd, YYYY"),
+        SimpleDateFormat("MMMM YYYY"),
+    )
 
     val title: String by lazy {
         val selector = "div[class*=GameHeader_profile_header_game]"
