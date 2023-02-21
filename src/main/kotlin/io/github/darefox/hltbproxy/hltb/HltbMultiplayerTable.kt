@@ -10,6 +10,7 @@ data class HltbMultiplayerTable(
 
 @Serializable
 data class HltbMultiPlayerTime(
+    val polled: Long?,
     val averageSec: Long?,
     val medianSec: Long?,
     val leastSec: Long?,
@@ -27,6 +28,7 @@ fun HltbTableParser.toMultiPlayer(): HltbMultiplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String,String>): HltbMultiPlayerTime {
     return HltbMultiPlayerTime(
+        polled = column["Polled"]?.toLongOrNull(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },
         medianSec = column["Median"]?.let { toSecondsOrNull(it) },
         leastSec = column["Least"]?.let { toSecondsOrNull(it) },
