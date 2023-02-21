@@ -10,24 +10,17 @@ class HltbOverviewParser(private val html: Document) {
 
     val singleplayerTimeTable: HltbSingleplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        html.select(selector)
-            .firstOrNull() {
-            it.tableContainsTitle("Single-Player")
-            }?.let { HltbTableParser(it) }
-            ?.toSingleplayer()
+        getTable(selector, "Single-Player")?.toSingleplayer()
     }
-    val multiplayerTimeTable: HltbTableParser? by lazy {
+    val multiplayerTimeTable: HltbMultiplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        html.select(selector).firstOrNull() {
-            it.tableContainsTitle("Multi-Player")
-        }?.let { HltbTableParser(it) }
+        getTable(selector, "Multi-Player")?.toMultiPlayer()
     }
 
     val speedrunTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        html.select(selector).firstOrNull() {
-            it.tableContainsTitle("Speedruns")
-        }?.let { HltbTableParser(it) }
+        val title = "Speedruns"
+        getTable(selector, title)
     }
 
     init {
@@ -69,6 +62,12 @@ class HltbOverviewParser(private val html: Document) {
 
     val japanRelease: Long?
         get() = getFirstDateByTitle("JP:")
+
+    private fun getTable(selector: String, title: String): HltbTableParser? {
+        return html.select(selector).firstOrNull() {
+            it.tableContainsTitle(title)
+        }?.let { HltbTableParser(it) }
+    }
 
     private fun Element.tableContainsTitle(title: String): Boolean {
         val titleParsed = this
