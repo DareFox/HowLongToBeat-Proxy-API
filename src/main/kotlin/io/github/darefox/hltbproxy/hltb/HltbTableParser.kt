@@ -32,13 +32,20 @@ class HltbTableParser(private val table: Element) {
     val title = table.select(titleSelector).first()!!.ownText()
 
     fun toSecondsOrNull(convert: String): Long? {
-        val hours = "\\d*(?=h)".toRegex().find(convert)?.value?.toInt()
+        val hours = "\\d*(?=h|½ Hours)".toRegex().find(convert)?.value?.toInt()
         val minutes = "\\d*(?=m)".toRegex().find(convert)?.value?.toInt()
         val seconds = "\\d*(?=s)".toRegex().find(convert)?.value?.toInt()
-        if (minutes == null && hours == null && seconds == null) {
+
+        val additionalMinutes = if ("½ (Hours|h)".toRegex().find(convert) != null) {
+            30L
+        } else {
+            0L
+        }
+
+        if (minutes == null && hours == null && seconds == null && additionalMinutes == 0L) {
             return null
         }
 
-        return ((hours ?: 0) * 60L * 60L) + ((minutes ?: 0) * 60L) + (seconds ?: 0)
+        return ((hours ?: 0) * 60L * 60L) + (((minutes ?: 0) + additionalMinutes) * 60L) + (seconds ?: 0)
     }
 }
