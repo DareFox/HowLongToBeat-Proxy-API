@@ -1,5 +1,8 @@
 package io.github.darefox.hltbproxy.hltb
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class HltbSingleplayerTable(
     val mainStory: HltbSinglePlayerTime,
     val extras: HltbSinglePlayerTime,
@@ -7,6 +10,7 @@ data class HltbSingleplayerTable(
     val allPlaystyles: HltbSinglePlayerTime
 )
 
+@Serializable
 data class HltbSinglePlayerTime(
     val averageSec: Long?,
     val medianSec: Long?,

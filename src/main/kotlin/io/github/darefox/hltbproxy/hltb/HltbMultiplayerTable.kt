@@ -1,10 +1,14 @@
 package io.github.darefox.hltbproxy.hltb
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class HltbMultiplayerTable(
     val coop: HltbMultiPlayerTime,
     val competitive: HltbMultiPlayerTime,
 )
 
+@Serializable
 data class HltbMultiPlayerTime(
     val averageSec: Long?,
     val medianSec: Long?,
