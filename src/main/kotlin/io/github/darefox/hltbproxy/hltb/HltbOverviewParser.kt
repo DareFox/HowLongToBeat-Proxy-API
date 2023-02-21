@@ -73,6 +73,21 @@ class HltbOverviewParser(private val html: Document) {
     val japanRelease: Long?
         get() = getFirstDateByTitleOrNull("JP:")
 
+    val steamId: Long?
+        get() {
+            var link: String? = null
+            html.select("div[class*=GameSummary_profile_info] a").firstOrNull {
+                link = it.attr("href")
+                link?.contains("https://store.steampowered.com") ?: false
+            } ?: return null
+
+            if (link == null) {
+                return null
+            }
+
+            return "(?<=\\/app\\/)\\d+".toRegex().find(link!!)?.value?.toLongOrNull()
+        }
+
     private fun getTable(selector: String, title: String): HltbTableParser? {
         return html.select(selector).firstOrNull {
             it.tableContainsTitle(title)
