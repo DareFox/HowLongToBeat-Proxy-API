@@ -6,6 +6,6 @@ import org.http4k.server.asServer
 
 
 fun main(args: Array<String>) {
-    val port = System.getenv("port")?.toIntOrNull() ?: 443
+    val port = System.getenv("PORT")?.toIntOrNull() ?: 443
     serverRoutes.asServer(Jetty(port)).start()
 }
