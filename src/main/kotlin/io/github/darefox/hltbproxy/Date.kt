@@ -2,7 +2,7 @@ package io.github.darefox.hltbproxy
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 /**
  * Parse until success or end of list

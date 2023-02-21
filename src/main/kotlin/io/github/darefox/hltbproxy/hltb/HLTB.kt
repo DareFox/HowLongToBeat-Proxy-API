@@ -15,7 +15,7 @@ object HLTB {
         val url = "https://howlongtobeat.com/?q=$encoded"
 
         val queryObj = createQueryObj(title, page)
-        val response =  client(
+        val response = client(
             Request(POST, "https://howlongtobeat.com/api/search").hltbJsonRequest(url, queryObj)
         )
 

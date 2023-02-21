@@ -1,13 +1,11 @@
 package io.github.darefox.hltbproxy.proxy
 
 import io.github.darefox.hltbproxy.cache.getOrGenerateBlocking
-import io.github.darefox.hltbproxy.cache.getOrGenerateBlockingJson
 import io.github.darefox.hltbproxy.hltb.*
 import io.github.darefox.hltbproxy.http4k.ErrorResponse
 import kotlinx.serialization.Serializable
 import org.http4k.core.*
 import org.http4k.format.KotlinxSerialization.auto
-import org.http4k.format.KotlinxSerialization.json
 import org.http4k.lens.Query
 
 val getOverviewInfo: HttpHandler = { req ->
