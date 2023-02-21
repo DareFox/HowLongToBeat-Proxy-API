@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run 256M app at :1337" type="JetRunConfigurationType">
+    <envs>
+      <env name="PORT" value="1337" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="io.github.darefox.hltbproxy.MainKt" />
+    <module name="HowLongToBeat-Proxy-API.main" />
+    <shortenClasspath name="NONE" />
+    <option name="VM_PARAMETERS" value="-Xmx256M" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
