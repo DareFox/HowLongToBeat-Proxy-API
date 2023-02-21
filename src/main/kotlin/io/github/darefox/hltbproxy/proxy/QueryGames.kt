@@ -1,8 +1,10 @@
 package io.github.darefox.hltbproxy.proxy
 
+import io.github.darefox.hltbproxy.cache.getOrGenerateBlocking
 import io.github.darefox.hltbproxy.cache.getOrGenerateBlockingJson
 import io.github.darefox.hltbproxy.hltb.HLTB
 import org.http4k.core.*
+import org.http4k.format.KotlinxSerialization.auto
 import org.http4k.format.KotlinxSerialization.json
 import org.http4k.lens.Query
 
@@ -12,14 +14,15 @@ val queryGames: HttpHandler = { req ->
 
     val name = nameLens(req)
     val page = pageLens(req).toInt()
-    val response = Response(Status.OK)
 
     val key = "queryGames;$name;$page"
-    val jsonBody = cache.getOrGenerateBlockingJson(mutexMap, key) {
-        HLTB.queryGames(name, page).data.map {
+
+    cache.getOrGenerateBlocking(mutexMap, key) {
+        val body = HLTB.queryGames(name, page).data.map {
             it.toProxyObj()
         }
-    }
 
-    response.with(Body.json().toLens() of jsonBody)
+        Response(Status.OK)
+            .with(Body.auto<List<QueryGamesResponse>>().toLens() of body)
+    }
 }
