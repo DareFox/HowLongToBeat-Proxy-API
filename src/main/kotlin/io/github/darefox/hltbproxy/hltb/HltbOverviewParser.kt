@@ -8,11 +8,13 @@ class HltbOverviewParser(private val html: Document) {
     private val blockDescriptionTitleCssSelector = "div.GameSummary_profile_info__e935c > strong"
     private val dateFormat = SimpleDateFormat("MMMM dd, YYYY")
 
-    val singleplayerTimeTable: HltbTableParser? by lazy {
+    val singleplayerTimeTable: HltbSingleplayerTable? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
-        html.select(selector).firstOrNull() {
+        html.select(selector)
+            .firstOrNull() {
             it.tableContainsTitle("Single-Player")
-        }?.let { HltbTableParser(it) }
+            }?.let { HltbTableParser(it) }
+            ?.toSingleplayer()
     }
     val multiplayerTimeTable: HltbTableParser? by lazy {
         val selector = "table[class*=GameTimeTable_game_main_table]"
@@ -26,6 +28,10 @@ class HltbOverviewParser(private val html: Document) {
         html.select(selector).firstOrNull() {
             it.tableContainsTitle("Speedruns")
         }?.let { HltbTableParser(it) }
+    }
+
+    init {
+        println("test")
     }
 
     val platformTimeTable: HltbTableParser? by lazy {
