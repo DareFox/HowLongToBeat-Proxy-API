@@ -25,6 +25,7 @@ val getOverviewInfo: HttpHandler = { req ->
 
 @Serializable
 data class OverviewInfo(
+    val title: String,
     val singleplayerTime: HltbSingleplayerTable?,
     val multiplayerTime: HltbMultiplayerTable?,
     val speedrunTime: HltbSpeedrunTable?,
@@ -40,6 +41,7 @@ data class OverviewInfo(
 
 fun HltbOverviewParser.toProxy(): OverviewInfo {
     return OverviewInfo(
+        title = title,
         singleplayerTime = singleplayerTimeTable,
         multiplayerTime = multiplayerTimeTable,
         speedrunTime = speedrunTimeTable,
