@@ -12,6 +12,7 @@ data class HltbSingleplayerTable(
 
 @Serializable
 data class HltbSinglePlayerTime(
+    val polled: Long?,
     val averageSec: Long?,
     val medianSec: Long?,
     val rushedSec: Long?,
@@ -31,6 +32,7 @@ fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String,String>): HltbSinglePlayerTime {
     return HltbSinglePlayerTime(
+        polled = column["Polled"]?.toLongOrNull(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },
         medianSec = column["Median"]?.let { toSecondsOrNull(it) },
         rushedSec = column["Rushed"]?.let { toSecondsOrNull(it) },

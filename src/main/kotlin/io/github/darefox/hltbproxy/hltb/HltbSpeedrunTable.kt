@@ -10,6 +10,7 @@ data class HltbSpeedrunTable(
 
 @Serializable
 data class HltbSpeedrunTime(
+    val polled: Long?,
     val averageSec: Long?,
     val medianSec: Long?,
     val leastSec: Long?,
@@ -27,6 +28,7 @@ fun HltbTableParser.toSpeedrun(): HltbSpeedrunTable {
 
 private fun HltbTableParser.getVariants(column: Map<String,String>): HltbSpeedrunTime {
     return HltbSpeedrunTime(
+        polled = column["Polled"]?.toLongOrNull(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },
         medianSec = column["Median"]?.let { toSecondsOrNull(it) },
         leastSec = column["Fastest"]?.let { toSecondsOrNull(it) },
