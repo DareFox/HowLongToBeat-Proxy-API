@@ -1,5 +1,6 @@
 package io.github.darefox.hltbproxy.cache
 
+import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -12,7 +13,7 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
         }
     }
 
-    private val map = WeakHashMap<K, CacheEntry<V>>()
+    private val map = WeakHashMap<K, WeakReference<CacheEntry<V>>>()
 
     override val size: Int
         get() = map.size
@@ -22,12 +23,12 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
     }
 
     override fun remove(key: K): V? {
-        return map.remove(key)?.value
+        return map.remove(key)?.get()?.value
     }
 
     override fun get(key: K): V? {
         val entry = map[key]
-        return entry?.checkLifetime(key)?.access(key)
+        return entry?.get()?.checkLifetime(key)?.access(key)
     }
 
     private fun CacheEntry<V>.checkLifetime(key: K): CacheEntry<V>? {
@@ -44,19 +45,21 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
 
     private fun CacheEntry<V>.access(key: K): V? {
         val current = System.nanoTime()
-        map[key] = this.copy(
+        map[key] = WeakReference(this.copy(
             accessedAtNano = current
-        )
+        ))
         return value
     }
 
     override fun set(key: K, value: V) {
         removeLastUsedUntilNotFull()
         val current = System.nanoTime()
-        map[key] = CacheEntry(
-            createdAtNano = current,
-            accessedAtNano = Long.MIN_VALUE,
-            value = value
+        map[key] = WeakReference(
+            CacheEntry(
+                createdAtNano = current,
+                accessedAtNano = Long.MIN_VALUE,
+                value = value
+            )
         )
     }
 
@@ -67,7 +70,7 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
     private fun removeLastUsedUntilNotFull() {
         while (isOverflowedOrFull()) {
             val leastUsed = map.entries.sortedBy {
-                it.value.accessedAtNano
+                it.value.get()?.accessedAtNano
             }.first()
 
             remove(leastUsed.key)
