@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HltbMultiplayerTable(
-    val coop: HltbMultiPlayerTime,
-    val competitive: HltbMultiPlayerTime,
+    val coop: HltbMultiPlayerTime?,
+    val competitive: HltbMultiPlayerTime?,
 )
 
 @Serializable
