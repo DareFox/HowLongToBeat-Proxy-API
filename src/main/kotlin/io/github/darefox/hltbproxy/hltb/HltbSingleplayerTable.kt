@@ -23,10 +23,10 @@ fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
     require(title == "Single-Player")
 
     return HltbSingleplayerTable(
-        mainStory = getVariants(rows["Main Story"]!!),
-        extras = getVariants(rows["Main + Extras"]!!),
-        completionist = getVariants(rows["Completionist"]!!),
-        allPlaystyles = getVariants(rows["All PlayStyles"]!!)
+        mainStory = rows["Main Story"]?.let { getVariants(it) },
+        extras = rows["Main + Extras"]?.let { getVariants(it) },
+        completionist = rows["Completionist"]?.let { getVariants(it) },
+        allPlaystyles = rows["All PlayStyles"]!!.let { getVariants(it) }
     )
 }
 
