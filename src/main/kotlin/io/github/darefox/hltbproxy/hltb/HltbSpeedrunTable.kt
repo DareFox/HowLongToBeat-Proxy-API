@@ -21,8 +21,8 @@ fun HltbTableParser.toSpeedrun(): HltbSpeedrunTable {
     require(title == "Speedruns")
 
     return HltbSpeedrunTable(
-        anyPercentage = getVariants(rows["Any%"]!!),
-        hundredPercentage = getVariants(rows["100%"]!!),
+        anyPercentage = rows["Any%"]?.let { getVariants(it) },
+        hundredPercentage = rows["100%"]?.let { getVariants(it) },
     )
 }
 

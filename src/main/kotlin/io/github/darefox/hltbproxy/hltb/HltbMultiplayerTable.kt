@@ -21,8 +21,8 @@ fun HltbTableParser.toMultiPlayer(): HltbMultiplayerTable {
     require(title == "Multi-Player")
 
     return HltbMultiplayerTable(
-        coop = getVariants(rows["Co-Op"]!!),
-        competitive = getVariants(rows["Competitive"]!!),
+        coop = rows["Co-Op"]?.let { getVariants(it) },
+        competitive = rows["Competitive"]?.let { getVariants(it) }
     )
 }
 
