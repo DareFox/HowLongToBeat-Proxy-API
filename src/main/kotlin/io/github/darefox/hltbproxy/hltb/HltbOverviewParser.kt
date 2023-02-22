@@ -10,6 +10,7 @@ class HltbOverviewParser(private val html: Document) {
     private val dateFormat = listOf(
         SimpleDateFormat("MMMM dd, YYYY"),
         SimpleDateFormat("MMMM YYYY"),
+        SimpleDateFormat("YYYY"),
     )
 
     val title: String by lazy {
