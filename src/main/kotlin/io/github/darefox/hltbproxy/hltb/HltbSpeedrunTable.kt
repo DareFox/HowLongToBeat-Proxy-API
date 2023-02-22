@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HltbSpeedrunTable(
-    val anyPercentage: HltbSpeedrunTime,
-    val hundredPercentage: HltbSpeedrunTime,
+    val anyPercentage: HltbSpeedrunTime?,
+    val hundredPercentage: HltbSpeedrunTime?,
 )
 
 @Serializable
