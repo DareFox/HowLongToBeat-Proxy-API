@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HltbSingleplayerTable(
-    val mainStory: HltbSinglePlayerTime,
-    val extras: HltbSinglePlayerTime,
-    val completionist: HltbSinglePlayerTime,
+    val mainStory: HltbSinglePlayerTime?,
+    val extras: HltbSinglePlayerTime?,
+    val completionist: HltbSinglePlayerTime?,
     val allPlaystyles: HltbSinglePlayerTime
 )
 
