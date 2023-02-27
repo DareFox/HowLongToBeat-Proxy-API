@@ -1,6 +1,11 @@
 package io.github.darefox.hltbproxy.cache
 
+import org.apache.commons.collections4.map.AbstractReferenceMap
+import org.apache.commons.collections4.map.ReferenceMap
+import java.lang.ref.SoftReference
+import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -12,7 +17,10 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
         }
     }
 
-    private val map = WeakHashMap<K, CacheEntry<V>>()
+    private val map = ReferenceMap<K, CacheEntry<V>>(
+        AbstractReferenceMap.ReferenceStrength.HARD, // key
+        AbstractReferenceMap.ReferenceStrength.SOFT  // value
+    )
 
     override val size: Int
         get() = map.size
