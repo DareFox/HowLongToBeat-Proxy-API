@@ -28,7 +28,7 @@ fun HltbTableParser.toMultiPlayer(): HltbMultiplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String, String>): HltbMultiPlayerTime {
     return HltbMultiPlayerTime(
-        polled = column["Polled"]?.toLongOrNull(),
+        polled = column["Polled"]?.parseLongWithK(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },
         medianSec = column["Median"]?.let { toSecondsOrNull(it) },
         leastSec = column["Least"]?.let { toSecondsOrNull(it) },
