@@ -2,7 +2,7 @@ package io.github.darefox.hltbproxy.hltb
 
 import java.lang.NumberFormatException
 
-private fun parseLongWithK(string: String): Long? {
+private fun parseStringWithKtoLong(string: String): Long? {
     val withoutKparse = "^\\d*\$".toRegex().find(string)?.value?.toLongOrNull()
 
     if (withoutKparse != null) {
@@ -37,7 +37,7 @@ private fun parseLongWithK(string: String): Long? {
  * ```
  */
 fun String.parseLongWithK(): Long? {
-    return parseLongWithK(this)
+    return parseStringWithKtoLong(this)
 }
 
 /**
@@ -51,7 +51,7 @@ fun String.parseLongWithK(): Long? {
  * ```
  */
 fun String.parseIntWithK(): Int? {
-    val result = parseLongWithK(this) ?: return null
+    val result = parseStringWithKtoLong(this) ?: return null
 
     if (result !in Int.MIN_VALUE..Int.MAX_VALUE) {
         throw NumberFormatException("$result is not in range of Int")
