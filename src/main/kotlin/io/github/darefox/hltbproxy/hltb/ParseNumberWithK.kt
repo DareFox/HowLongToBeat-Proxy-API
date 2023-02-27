@@ -9,14 +9,14 @@ private fun parseStringWithKtoLong(string: String): Long? {
         return withoutKparse
     }
 
-    val exponent = "\\d+(?=(.|)\\d+k)"
+    val exponent = "\\d+(?=(.|)\\d+(K|k))"
         .toRegex()
         .find(string)
         ?.value
         ?.toLongOrNull()
         ?.times(1000)
 
-    val mantissa = "(?<=\\d(\\.|))\\d+(?=k)"
+    val mantissa = "(?<=\\d(\\.|))\\d+(?=(K|k))"
         .toRegex()
         .find(string)
         ?.value
