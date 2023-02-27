@@ -227,7 +227,7 @@ fun HltbTableParser.toPlatform(): HltbPlatformTable {
 
 private fun HltbTableParser.getVariants(column: Map<String, String>): HltbPlatformTime {
     return HltbPlatformTime(
-        polled = column["Polled"]?.toLongOrNull(),
+        polled = column["Polled"]?.parseLongWithK(),
         mainSec = column["Main"]?.let { toSecondsOrNull(it) },
         extraSec = column["Main +"]?.let { toSecondsOrNull(it) },
         completionistSec = column["100%"]?.let { toSecondsOrNull(it) },
