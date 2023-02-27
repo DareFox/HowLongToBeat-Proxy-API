@@ -19,7 +19,7 @@ class WeakExpiringLRUCache<K, V>(val maxSize: Int = 1_000_000, val lifetime: Dur
 
     private val map = ReferenceMap<K, CacheEntry<V>>(
         AbstractReferenceMap.ReferenceStrength.HARD, // key
-        AbstractReferenceMap.ReferenceStrength.WEAK  // value
+        AbstractReferenceMap.ReferenceStrength.SOFT  // value
     )
 
     override val size: Int
