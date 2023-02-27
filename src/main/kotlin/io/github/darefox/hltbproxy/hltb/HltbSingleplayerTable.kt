@@ -32,7 +32,7 @@ fun HltbTableParser.toSingleplayer(): HltbSingleplayerTable {
 
 private fun HltbTableParser.getVariants(column: Map<String, String>): HltbSinglePlayerTime {
     return HltbSinglePlayerTime(
-        polled = column["Polled"]?.toLongOrNull(),
+        polled = column["Polled"]?.parseLongWithK(),
         averageSec = column["Average"]?.let { toSecondsOrNull(it) },
         medianSec = column["Median"]?.let { toSecondsOrNull(it) },
         rushedSec = column["Rushed"]?.let { toSecondsOrNull(it) },
