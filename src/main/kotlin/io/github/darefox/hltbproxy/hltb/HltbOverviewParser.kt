@@ -120,3 +120,4 @@ class HltbOverviewParser(private val html: Document) {
         return dateFormat.parse(parent.ownText()).time
     }
 }
+
