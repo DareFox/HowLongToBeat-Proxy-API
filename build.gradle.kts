@@ -37,6 +37,8 @@ dependencies {
 
     // html parser
     implementation("org.jsoup:jsoup:1.15.4")
+
+    implementation("org.apache.commons:commons-collections4:4.1")
 }
 
 
