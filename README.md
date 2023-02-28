@@ -1,23 +1,19 @@
 # Current endpoints:
 
-- GET /v1/query
+- #### GET /v1/query
+	##### Search game by title
+	URL Params:
 
-URL Params:
+	- `title`: string, required
 
-`title`: string, required
-
-`page`: int
-
-
-- GET /v1/overview
-
-URL Params:
-
-`id`: id, required
+	- `page`: int
 
 
-- GET /v1/cache
+- #### GET /v1/overview
+	##### Get info about game
+	URL Params:
 
-URL Params:
+	- `id`: number, required
 
-None
+- #### GET /v1/cache
+	##### Get info about current cache state
