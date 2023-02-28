@@ -23,6 +23,7 @@ URL Params:
 Codes: 
 - 200 -	Sucesss
 - 500 -	Server error
+- 404 - Game with specified not found
 
 ----
 - #### GET /v1/cache
