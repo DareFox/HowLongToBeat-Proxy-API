@@ -18,5 +18,5 @@ val serverRoutes = routes(
     "/v1/query" bind GET to queryGames,
     "/v1/overview" bind GET to getOverviewInfo,
     "/v1/cache" bind GET to cacheInfo
-)
+).withFilter(corsAll)
 
