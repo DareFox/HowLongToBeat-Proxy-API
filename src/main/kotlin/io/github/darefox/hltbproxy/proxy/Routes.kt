@@ -12,7 +12,8 @@ val serverRoutes = routes(
             "Sleepin' on a subway.\n" +
                     "City up above me. Dreamin' up the words to this song.\n" +
                     "Bettin' on a someday. Wakin' up at someplace.\n" +
-                    "Believe me, baby, I know"
+                    "Believe me, baby, I know\n\n" +
+                    "https://github.com/DareFox/HowLongToBeat-Proxy-API"
         )
     },
     "/v1/query" bind GET to queryGames,
