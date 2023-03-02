@@ -8,9 +8,9 @@ import java.text.SimpleDateFormat
 class HltbOverviewParser(private val html: Document) {
     private val blockDescriptionTitleCssSelector = "div.GameSummary_profile_info__e935c > strong"
     private val dateFormat = listOf(
-        SimpleDateFormat("MMMM dd, YYYY"),
-        SimpleDateFormat("MMMM YYYY"),
-        SimpleDateFormat("YYYY"),
+        SimpleDateFormat("MMMM dd, yyyy"),
+        SimpleDateFormat("MMMM yyyy"),
+        SimpleDateFormat("yyyy"),
     )
 
     val title: String by lazy {
