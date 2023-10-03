@@ -12,11 +12,12 @@ import java.util.*
  */
 fun List<SimpleDateFormat>.parse(string: String): Date {
     var ex: ParseException? = null
-    lateinit var result: Date
 
     for (dateFormat in this) {
         try {
-            return dateFormat.parse(string)
+            // not inlined for debugging
+            val result = dateFormat.parse(string)
+            return result
         } catch (caught: ParseException) {
             ex = caught
         }
