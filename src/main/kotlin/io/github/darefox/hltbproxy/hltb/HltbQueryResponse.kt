@@ -16,7 +16,6 @@ data class HltbQueryResponse(
 
 @Serializable
 data class HltbGameData(
-    val count: Long,
     @JsonNames("game_id")
     val gameId: Long,
     @JsonNames("game_name")
