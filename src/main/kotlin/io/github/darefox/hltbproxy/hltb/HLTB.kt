@@ -16,7 +16,7 @@ object HLTB {
 
         val queryObj = createQueryObj(title, page)
         val response = client(
-            Request(POST, "https://howlongtobeat.com/api/search/4b4cbe570602c88660f7df8ea0cb6b6e").hltbJsonRequest(url, queryObj)
+            Request(POST, "https://howlongtobeat.com/api/search/ca9ec548965a60bb").hltbJsonRequest(url, queryObj)
         )
 
         return Body.auto<HltbQueryResponse>().toLens().invoke(response)
