@@ -46,8 +46,8 @@ fun HltbGameData.toProxyObj(): QueryGamesResponse {
         type = this.gameType,
         gameId = this.gameId,
         gameImage = this.gameImage,
-        dev = this.profileDev,
-        platforms = this.profilePlatform.trim().split(", "),
+        dev = "API Deprecated",
+        platforms = listOf(),
         releaseYear = this.releaseWorld.toInt(),
         beatTime = QueryGamesBeatTime(
             main = QueryGamesBeatTimeEntry(compMain, compMainCount),
@@ -62,6 +62,6 @@ fun HltbGameData.toProxyObj(): QueryGamesResponse {
             retired = countRetired,
             reviews = countReview,
         ),
-        steamId = if (profileSteam == 0L) null else profileSteam
+        steamId = null
     )
 }

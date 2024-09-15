@@ -36,8 +36,6 @@ data class HltbGameData(
     val compLvlCo: Long,
     @JsonNames("comp_lvl_mp")
     val compLvlMp: Long,
-    @JsonNames("comp_lvl_spd")
-    val compLvlSpd: Long,
     @JsonNames("comp_main")
     val compMain: Long,
     @JsonNames("comp_plus")
@@ -76,14 +74,8 @@ data class HltbGameData(
     val countPlaying: Long,
     @JsonNames("count_retired")
     val countRetired: Long,
-    @JsonNames("profile_dev")
-    val profileDev: String,
     @JsonNames("profile_popular")
     val profilePopular: Long,
-    @JsonNames("profile_steam")
-    val profileSteam: Long,
-    @JsonNames("profile_platform")
-    val profilePlatform: String,
     @JsonNames("release_world")
     val releaseWorld: Long,
 )
