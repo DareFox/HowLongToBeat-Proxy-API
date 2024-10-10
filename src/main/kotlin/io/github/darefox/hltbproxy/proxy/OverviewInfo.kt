@@ -3,6 +3,7 @@ package io.github.darefox.hltbproxy.proxy
 import io.github.darefox.hltbproxy.cache.getOrGenerateBlocking
 import io.github.darefox.hltbproxy.hltb.*
 import io.github.darefox.hltbproxy.http4k.ErrorResponse
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import org.http4k.core.*
 import org.http4k.format.KotlinxSerialization.auto
@@ -15,7 +16,7 @@ val getOverviewInfo: HttpHandler = { req ->
 
     val key = "overviewInfo;$id"
     cache.getOrGenerateBlocking(mutexMap, key) {
-        val obj = HLTB.getOverviewInfoAboutGame(id)?.toProxy()
+        val obj = runBlocking { HLTB.getOverviewInfoAboutGame(id)?.toProxy() }
             ?: return@getOrGenerateBlocking ErrorResponse(Status.NOT_FOUND, "Not Found")
         Response(Status.OK).with(Body.auto<OverviewInfo>().toLens() of obj)
     }
