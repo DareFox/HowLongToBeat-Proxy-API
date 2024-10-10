@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.serialization") version "2.0.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     application
+    idea
 }
 
 group = "io.github.darefox"
@@ -15,6 +16,12 @@ repositories {
     mavenCentral()
 }
 
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
+}
 
 dependencies {
     testImplementation(kotlin("test"))
