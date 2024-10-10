@@ -2,6 +2,7 @@ package io.github.darefox.hltbproxy.proxy
 
 import io.github.darefox.hltbproxy.cache.getOrGenerateBlocking
 import io.github.darefox.hltbproxy.hltb.HLTB
+import kotlinx.coroutines.runBlocking
 import org.http4k.core.*
 import org.http4k.format.KotlinxSerialization.auto
 import org.http4k.lens.Query
@@ -16,7 +17,7 @@ val queryGames: HttpHandler = { req ->
     val key = "queryGames;$name;$page"
 
     cache.getOrGenerateBlocking(mutexMap, key) {
-        val body = HLTB.queryGames(name, page).data.map {
+        val body = runBlocking { HLTB.queryGames(name, page) }.data.map {
             it.toProxyObj()
         }
 
