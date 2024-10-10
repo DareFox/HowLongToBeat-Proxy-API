@@ -125,11 +125,12 @@ object HLTB {
             it.attr("abs:src")
         }
 
-        return externalScripts.asSequence().map { scriptUrl ->
+        return externalScripts.asSequence().mapNotNull { scriptUrl ->
             log.info("Downloading script: $scriptUrl")
             val response = client(Request(GET, scriptUrl).hltbDefaultHeaders(scriptUrl, false))
             if (response.status != Status.OK) {
-                error("On downloading script ($scriptUrl), server returned ${response.status}")
+                log.error("On downloading script ($scriptUrl), server returned ${response.status}")
+                return@mapNotNull null
             }
             response.bodyString()
         }
