@@ -31,23 +31,29 @@ object HLTB {
         var keyIsNotUpdated = true
         lateinit var response: Response
         while (true) {
-            val call = client(
-                Request(POST, "https://howlongtobeat.com/api/search/${getSearchKey()}")
-                    .hltbJsonRequest(url, queryObj)
-            )
+            val request = Request(POST, "https://howlongtobeat.com/api/search/${getSearchKey()}")
+                .hltbJsonRequest(url, queryObj)
+            val call = client(request)
 
-            if (call.bodyString().startsWith("<!DOCTYPE html>") && keyIsNotUpdated) {
-                log.info("Search key is no longer valid, calling update")
-                updateSearchKey()
-                keyIsNotUpdated = false
+            val isResponseInHtml = call.bodyString().startsWith("<!DOCTYPE html>")
+
+
+            if (call.status.successful) {
+                if (isResponseInHtml) {
+                    if (keyIsNotUpdated) {
+                        log.info("Search key is no longer valid, calling update")
+                        updateSearchKey()
+                        keyIsNotUpdated = false
+                        continue
+                    }
+                    error("Search key was updated, but server returned html. Maybe search API was changed")
+                } else {
+                    response = call
+                    break
+                }
             } else {
-                response = call
-                break
+                error("Server returned not successful code: ${call.status.code}\n\n\nBody: ${call.bodyString()}")
             }
-        }
-
-        if (response.bodyString().startsWith("<!DOCTYPE html>")) {
-            updateSearchKey()
         }
 
         return Body.auto<HltbQueryResponse>().toLens().invoke(response)
@@ -102,6 +108,7 @@ object HLTB {
                     val key = findKeyInScripts(codeOfScripts)
 
                     searchKey = key
+                    log.info("Key is $searchKey")
                     key
                 }
             }
@@ -136,11 +143,19 @@ object HLTB {
         }
     }
 
-    private fun findKeyInScripts(codes: Sequence<String>): String {
-        val regex = "(?<=api/search/\"\\.concat\\(\")[a-zA-Z0-9]+".toRegex()
-        for (code in codes) {
-            val result = regex.find(code)?.value ?: continue
-            return result
+    private fun findKeyInScripts(scripts: Sequence<String>): String {
+        val fetchLineRegex = "(?<=api/search/).*?,".toRegex()
+        val concatValuesRegex = "(?<=concat\\(\").*?(?=\")".toRegex()
+        for (script in scripts) {
+            val fetchLine = fetchLineRegex.find(script) ?: continue
+            log.info("found fetch line: ${fetchLine.value}")
+            val concatValues = concatValuesRegex.findAll(fetchLine.value).toList()
+            if (concatValues.isEmpty()) {
+                log.info("but concat values are empty")
+                continue
+            }
+
+            return concatValues.joinToString("") { it.value }
         }
 
         error("Can't find search key")
