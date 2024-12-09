@@ -7,10 +7,11 @@ import org.http4k.format.KotlinxSerialization.auto
 
 fun Request.hltbDefaultHeaders(url: String, bodyIsJson: Boolean = true): Request {
     val headers = mutableListOf(
-        "Authority" to "howlongtobeat.com",
+        "Host" to "howlongtobeat.com",
         "Origin" to "https://howlongtobeat.com",
         "Referer" to "$url",
-        "User-Agent" to "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
+        "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
+        "Accept" to "*/*"
     ).also {
         if (bodyIsJson) it += "Content-Type" to "application/json"
     }
