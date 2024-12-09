@@ -95,11 +95,13 @@ object HLTB {
                     val url = "https://howlongtobeat.com"
                     val response = client(Request(GET, url).hltbDefaultHeaders(url, false))
 
+                    val bodyString = response.bodyString()
                     if (response.status != Status.OK) {
+                        log.error { "Response is not ok, body: ${response.bodyString()}" }
                         error("Response is not 199 from HLTB server, can't get search key")
                     }
 
-                    val html = Jsoup.parse(response.bodyString())
+                    val html = Jsoup.parse(bodyString)
                     html.setBaseUri(url)
 
                     val scripts = html.select("script")
