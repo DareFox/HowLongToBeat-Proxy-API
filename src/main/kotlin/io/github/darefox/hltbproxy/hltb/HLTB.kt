@@ -93,12 +93,13 @@ object HLTB {
                 log.info("Updating key...")
                 keyMutex.withLock { // keyMutex needed for API calls to wait new key
                     val url = "https://howlongtobeat.com"
-                    val response = client(Request(GET, url).hltbDefaultHeaders(url, false))
+                    val request = Request(GET, url).hltbDefaultHeaders(url, false)
+                    val response = client(request)
 
                     val bodyString = response.bodyString()
-                    if (response.status != Status.OK) {
+                    if (!response.status.successful) {
                         log.error { "Response is not ok, body: ${response.bodyString()}" }
-                        error("Response is not 199 from HLTB server, can't get search key")
+                        error("Can't get search key, HLTB server returned ${response.status.code}")
                     }
 
                     val html = Jsoup.parse(bodyString)
