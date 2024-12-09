@@ -9,13 +9,12 @@ data class HltbQueryRequest(
     val searchPage: Int,
     val size: Int,
     val searchOptions: SearchOptions,
-    val lists: Lists,
-    val useCache: Boolean = true,
+    val useCache: Boolean,
 )
 
 @Serializable
 data class Lists(
-    val sortCategory: String = "follows"
+    val sortCategory: String
 )
 
 
@@ -26,6 +25,7 @@ data class SearchOptions(
     val filter: String,
     val sort: Int,
     val randomizer: Int,
+    val lists: Lists,
 )
 
 @Serializable
@@ -51,7 +51,7 @@ data class Gameplay(
     val perspective: String,
     val flow: String,
     val genre: String,
-    val subGenre: String
+    val difficulty: String
 )
 
 @Serializable
@@ -85,8 +85,9 @@ fun createQueryObj(title: String, page: Int): HltbQueryRequest {
             users = Users(sortCategory = "postcount"),
             filter = "",
             sort = 0,
-            randomizer = 0
+            randomizer = 0,
+            lists = Lists("follows"),
         ),
-        lists = Lists()
+        useCache = true
     )
 }
