@@ -31,7 +31,7 @@ object HLTB {
         var keyIsNotUpdated = true
         lateinit var response: Response
         while (true) {
-            val request = Request(POST, "https://howlongtobeat.com/api/search/${getSearchKey()}")
+            val request = Request(POST, "https://howlongtobeat.com/api/find/${getSearchKey()}")
                 .hltbJsonRequest(url, queryObj)
             val call = client(request)
 
@@ -52,7 +52,8 @@ object HLTB {
                     break
                 }
             } else {
-                error("Server returned not successful code: ${call.status.code}\n\n\nBody: ${call.bodyString()}")
+                val normalizedHtml = Jsoup.parse(call.bodyString()).text()
+                error("Server returned not successful code: ${call.status.code}\n\n\nBody: $normalizedHtml")
             }
         }
 
@@ -97,12 +98,14 @@ object HLTB {
                     val response = client(request)
 
                     val bodyString = response.bodyString()
+                    val html = Jsoup.parse(bodyString)
+
                     if (!response.status.successful) {
                         log.error { "Response is not ok, body: ${response.bodyString()}" }
                         error("Can't get search key, HLTB server returned ${response.status.code}")
                     }
 
-                    val html = Jsoup.parse(bodyString)
+
                     html.setBaseUri(url)
 
                     val scripts = html.select("script")
@@ -147,7 +150,7 @@ object HLTB {
     }
 
     private fun findKeyInScripts(scripts: Sequence<String>): String {
-        val fetchLineRegex = "(?<=api/search/).*?,".toRegex()
+        val fetchLineRegex = "(?<=api/find/).*?,".toRegex()
         val concatValuesRegex = "(?<=concat\\(\").*?(?=\")".toRegex()
         for (script in scripts) {
             val fetchLine = fetchLineRegex.find(script) ?: continue
