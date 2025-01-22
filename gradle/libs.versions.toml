@@ -1,0 +1,33 @@
+[versions]
+kotlin = "2.1.0"
+http4k = "5.44.0.0"
+
+[libraries]
+jsoup = { module = "org.jsoup:jsoup", version = "1.18.1" }
+commonCollections = { module = "org.apache.commons:commons-collections4", version = "4.4" }
+githubApi = { module = "org.kohsuke:github-api", version = "1.326"}
+# ---
+http4kCore = { module = "org.http4k:http4k-core", version.ref = "http4k" }
+http4kServer = { module = "org.http4k:http4k-server-jetty", version.ref = "http4k" }
+http4kClient = { module = "org.http4k:http4k-client-apache", version.ref = "http4k" }
+http4kSerialization = { module = "org.http4k:http4k-format-kotlinx-serialization", version.ref = "http4k" }
+# ---
+slf4jSimple = { module = "org.slf4j:slf4j-simple", version = "2.0.13" }
+kotlinLogging = { module = "io.github.microutils:kotlin-logging-jvm", version = "3.0.5" }
+# ---
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlinXcoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.9.0" }
+kotlinXserializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.7.1" }
+kotlinXserializationXmlCore = { module = "io.github.pdvrieze.xmlutil:core", version = "0.90.3"}
+kotlinXserializationXml = { module = "io.github.pdvrieze.xmlutil:serialization", version = "0.90.3"}
+
+[bundles]
+http4kClient = ["http4kCore", "http4kClient", "http4kSerialization"]
+http4kServer = ["http4kCore", "http4kServer", "http4kSerialization"]
+kotlinx = ["kotlinXcoroutines", "kotlinXserializationJson"]
+kotlinxXml = ["kotlinXserializationXml", "kotlinXserializationXmlCore"]
+logging = [ "slf4jSimple", "kotlinLogging" ]
+
+[plugins]
+shadowJar = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
