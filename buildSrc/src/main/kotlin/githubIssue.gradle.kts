@@ -124,7 +124,7 @@ abstract class CreateGithubIssue : DefaultTask() {
     }
 }
 
-abstract class CloseGithubIssue() : DefaultTask() {
+abstract class CloseGithubIssue : DefaultTask() {
     init {
         group = "verification"
     }
