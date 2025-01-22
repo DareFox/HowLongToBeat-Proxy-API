@@ -2,6 +2,7 @@ name: Reoccurring system tests for :server module
 permissions:
   issues: write
 on:
+  workflow_dispatch: 
   schedule:
     - cron: "30 * * * *"
 jobs:
