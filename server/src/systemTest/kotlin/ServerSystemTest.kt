@@ -13,7 +13,6 @@ abstract class ServerSystemTest(url: URL) {
     fun query() {
         val request = Request(Method.GET, "$httpHost/v1/query?title=Edna")
         val response = httpClient(request)
-        return
         assert(response.status.successful) { "/query response wasn't successful.\n\n${response.toMessage()}" }
     }
 
