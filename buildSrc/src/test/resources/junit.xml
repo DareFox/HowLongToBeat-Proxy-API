@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="LocalServerTest" tests="2" skipped="0" failures="1" errors="0" timestamp="2025-01-05T16:14:33"
+           hostname="THISISHOSTNAME" time="4.52">
+    <properties/>
+    <testcase name="@overview()" classname="LocalServerTest" time="3.394"/>
+    <testcase name="@query()" classname="LocalServerTest" time="1.124">
+        <failure
+                message="java.lang.AssertionError: /query response wasn't successful.&#10;&#10;HTTP/1.1 500 Server Error&#13;&#10;Server: Jetty(12.0.16)&#13;&#10;Date: Sun, 05 Jan 2025 16:14:36 GMT&#13;&#10;Cache-Control: must-revalidate,no-cache,no-store&#13;&#10;Content-Type: text/html;charset=iso-8859-1&#13;&#10;Content-Length: 582&#13;&#10;&#13;&#10;&lt;html&gt;&#10;&lt;head&gt;&#10;&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=ISO-8859-1&quot;/&gt;&#10;&lt;title&gt;Error 500 java.lang.IllegalStateException: Can&amp;apos;t find search key&lt;/title&gt;&#10;&lt;/head&gt;&#10;&lt;body&gt;&#10;&lt;h2&gt;HTTP ERROR 500 java.lang.IllegalStateException: Can&amp;apos;t find search key&lt;/h2&gt;&#10;&lt;table&gt;&#10;&lt;tr&gt;&lt;th&gt;URI:&lt;/th&gt;&lt;td&gt;http://localhost:8080/v1/query?title=Edna&lt;/td&gt;&lt;/tr&gt;&#10;&lt;tr&gt;&lt;th&gt;STATUS:&lt;/th&gt;&lt;td&gt;500&lt;/td&gt;&lt;/tr&gt;&#10;&lt;tr&gt;&lt;th&gt;MESSAGE:&lt;/th&gt;&lt;td&gt;java.lang.IllegalStateException: Can&amp;apos;t find search key&lt;/td&gt;&lt;/tr&gt;&#10;&lt;/table&gt;&#10;&lt;hr/&gt;&lt;a href=&quot;https://jetty.org/&quot;&gt;Powered by Jetty:// 12.0.16&lt;/a&gt;&lt;hr/&gt;&#10;&#10;&lt;/body&gt;&#10;&lt;/html&gt;&#10;"
+                type="java.lang.AssertionError">java.lang.AssertionError: /query response wasn't successful.
+
+            HTTP/1.1 500 Server Error
+            Server: Jetty(12.0.16)
+            Date: Sun, 05 Jan 2025 16:14:36 GMT
+            Cache-Control: must-revalidate,no-cache,no-store
+            Content-Type: text/html;charset=iso-8859-1
+            Content-Length: 582
+
+            &lt;html&gt;
+            &lt;head&gt;
+            &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=ISO-8859-1&quot;/&gt;
+            &lt;title&gt;Error 500 java.lang.IllegalStateException: Can&amp;apos;t find search key&lt;/title&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+            &lt;h2&gt;HTTP ERROR 500 java.lang.IllegalStateException: Can&amp;apos;t find search key&lt;/h2&gt;
+            &lt;table&gt;
+            &lt;tr&gt;&lt;th&gt;URI:&lt;/th&gt;&lt;td&gt;http://localhost:8080/v1/query?title=Edna&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;STATUS:&lt;/th&gt;&lt;td&gt;500&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;th&gt;MESSAGE:&lt;/th&gt;&lt;td&gt;java.lang.IllegalStateException: Can&amp;apos;t find search
+            key&lt;/td&gt;&lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;hr/&gt;&lt;a href=&quot;https://jetty.org/&quot;&gt;Powered by Jetty:// 12.0.16&lt;/a&gt;&lt;hr/&gt;
+
+            &lt;/body&gt;
+            &lt;/html&gt;
+
+            at ServerSystemTest.@query(ServerSystemTest.kt:16)
+            at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+            at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+            at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
+        </failure>
+    </testcase>
+    <system-out><![CDATA[]]></system-out>
+    <system-err><![CDATA[[Test worker] INFO org.eclipse.jetty.server.Server - jetty-12.0.16; built: 2024-12-09T21:02:54.535Z; git: c3f88bafb4e393f23204dc14dc57b042e84debc7; jvm 23.0.1+11
+[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@1b28f282{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+[Test worker] INFO org.eclipse.jetty.server.Server - Started oejs.Server@361c294e{STARTING}[12.0.16,sto=5000] @1216ms
+[Test worker] INFO org.eclipse.jetty.server.Server - Stopped oejs.Server@361c294e{STOPPING}[12.0.16,sto=5000]
+[Test worker] INFO org.eclipse.jetty.server.Server - Shutdown oejs.Server@361c294e{STOPPING}[12.0.16,sto=5000]
+[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Stopped ServerConnector@1b28f282{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+[Test worker] INFO org.eclipse.jetty.server.Server - jetty-12.0.16; built: 2024-12-09T21:02:54.535Z; git: c3f88bafb4e393f23204dc14dc57b042e84debc7; jvm 23.0.1+11
+[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Started ServerConnector@85ec632{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+[Test worker] INFO org.eclipse.jetty.server.Server - Started oejs.Server@420bc288{STARTING}[12.0.16,sto=5000] @4412ms
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Updating key...
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://cdn.ziffstatic.com/pg/howlongtobeat.js
+[qtp1107404311-55 @coroutine#4] ERROR io.github.darefox.hltbproxy.scraping.HLTB - On downloading script (https://cdn.ziffstatic.com/pg/howlongtobeat.js), server returned 400 Bad Request
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://cdn.ziffstatic.com/jst/zdconsent.js
+[qtp1107404311-55 @coroutine#4] ERROR io.github.darefox.hltbproxy.scraping.HLTB - On downloading script (https://cdn.ziffstatic.com/jst/zdconsent.js), server returned 400 Bad Request
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/polyfills-42372ed130431b0a.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/webpack-2b511f36273a67ff.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/framework-c2373564c69ff406.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/main-c1a08f3246a0e313.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/pages/_app-1a61680ba7260150.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/chunks/pages/index-ecc358bd978a4d78.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/OkYolBC_7GLePqwIvxp4R/_buildManifest.js
+[qtp1107404311-55 @coroutine#4] INFO io.github.darefox.hltbproxy.scraping.HLTB - Downloading script: https://howlongtobeat.com/_next/static/OkYolBC_7GLePqwIvxp4R/_ssgManifest.js
+[qtp1107404311-55] WARN org.eclipse.jetty.server.Response - writeError: status=500, message=java.lang.IllegalStateException: Can't find search key, response=ErrorResponse@33f381e0{500,GET@4400b3dd http://localhost:8080/v1/query?title=Edna HTTP/1.1}
+java.lang.IllegalStateException: Can't find search key
+	at io.github.darefox.hltbproxy.scraping.HLTB.findKeyInScripts(HLTB.kt:168)
+	at io.github.darefox.hltbproxy.scraping.HLTB.updateSearchKey(HLTB.kt:115)
+	at io.github.darefox.hltbproxy.scraping.HLTB.getSearchKey(HLTB.kt:80)
+	at io.github.darefox.hltbproxy.scraping.HLTB.queryGames(HLTB.kt:35)
+	at io.github.darefox.hltbproxy.proxy.QueryGamesKt$queryGames$1$1$body$1.invokeSuspend(QueryGames.kt:20)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at io.github.darefox.hltbproxy.proxy.QueryGamesKt.queryGames$lambda$2$lambda$1(QueryGames.kt:20)
+	at io.github.darefox.hltbproxy.cache.CacheOrDefaultKt.getOrGenerateBlocking$lambda$1(CacheOrDefault.kt:15)
+	at io.github.darefox.hltbproxy.mutex.BlockingMutexKt$withLockBlocking$1.invokeSuspend(BlockingMutex.kt:19)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:101)
+	at kotlinx.coroutines.EventLoopImplBase.processNextEvent(EventLoop.common.kt:263)
+	at kotlinx.coroutines.BlockingCoroutine.joinBlocking(Builders.kt:95)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking(Builders.kt:69)
+	at kotlinx.coroutines.BuildersKt.runBlocking(Unknown Source)
+	at kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking$default(Builders.kt:47)
+	at kotlinx.coroutines.BuildersKt.runBlocking$default(Unknown Source)
+	at io.github.darefox.hltbproxy.mutex.BlockingMutexKt.withLockBlocking(BlockingMutex.kt:8)
+	at io.github.darefox.hltbproxy.cache.CacheOrDefaultKt.getOrGenerateBlocking(CacheOrDefault.kt:13)
+	at io.github.darefox.hltbproxy.proxy.QueryGamesKt.queryGames$lambda$2(QueryGames.kt:19)
+	at io.github.darefox.hltbproxy.proxy.CORSKt.corsAll$lambda$1$lambda$0(CORS.kt:7)
+	at org.http4k.routing.TemplateRouter.match$lambda$0(Router.kt:188)
+	at org.http4k.routing.RouterMatch$MatchingHandler.invoke(Router.kt:65)
+	at org.http4k.routing.RouterMatch$MatchingHandler.invoke(Router.kt:60)
+	at org.http4k.routing.RouterBasedHttpHandler.invoke(RouterBasedHttpHandler.kt:19)
+	at org.http4k.routing.RouterBasedHttpHandler.invoke(RouterBasedHttpHandler.kt:13)
+	at org.http4k.server.Http4kJettyHttpHandler.handle(Http4kJettyHttpHandler.kt:21)
+	at org.eclipse.jetty.server.Handler$Wrapper.handle(Handler.java:740)
+	at org.eclipse.jetty.server.handler.EventsHandler.handle(EventsHandler.java:81)
+	at org.eclipse.jetty.server.Handler$Wrapper.handle(Handler.java:740)
+	at org.eclipse.jetty.server.Handler$Sequence.handle(Handler.java:805)
+	at org.eclipse.jetty.server.Server.handle(Server.java:182)
+	at org.eclipse.jetty.server.internal.HttpChannelState$HandlerInvoker.run(HttpChannelState.java:662)
+	at org.eclipse.jetty.server.internal.HttpConnection.onFillable(HttpConnection.java:418)
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:322)
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:99)
+	at org.eclipse.jetty.io.SelectableChannelEndPoint$1.run(SelectableChannelEndPoint.java:53)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:979)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.doRunJob(QueuedThreadPool.java:1209)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1164)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+[Test worker] INFO org.eclipse.jetty.server.Server - Stopped oejs.Server@420bc288{STOPPING}[12.0.16,sto=5000]
+[Test worker] INFO org.eclipse.jetty.server.Server - Shutdown oejs.Server@420bc288{STOPPING}[12.0.16,sto=5000]
+[Test worker] INFO org.eclipse.jetty.server.AbstractConnector - Stopped ServerConnector@85ec632{HTTP/1.1, (http/1.1)}{0.0.0.0:8080}
+]]></system-err>
+</testsuite>
