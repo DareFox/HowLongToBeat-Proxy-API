@@ -1,4 +1,4 @@
-name: Reoccurring system tests for :server module
+name: Recurring system tests for :server module
 permissions:
   issues: write
 on:
@@ -22,12 +22,12 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Run local system test
+      - name: Local system test
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: ./gradlew :server:systemTest :server:createIssueOnLocalFailure :server:closeIssueOnLocalSuccess --continue --stacktrace
 
-      - name: Run remote system test
+      - name: Remote system test
         if: ${{ !cancelled() }} # If local system test fails, we will run remote test anyway
         env:
           GITHUB_TOKEN: ${{ github.token }}
