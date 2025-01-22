@@ -2,7 +2,7 @@ name: Reoccurring system tests for :server module
 permissions:
   issues: write
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
   schedule:
     - cron: "30 * * * *"
 jobs:
@@ -25,10 +25,10 @@ jobs:
       - name: Run local system test
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: ./gradlew :server:systemTest :server:createIssueOnLocalFailure :server:closeIssueOnLocalSuccess --continue
+        run: ./gradlew :server:systemTest :server:createIssueOnLocalFailure :server:closeIssueOnLocalSuccess --continue --stacktrace
 
       - name: Run remote system test
         if: ${{ !cancelled() }} # If local system test fails, we will run remote test anyway
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: ./gradlew :server:systemTest :server:createIssueOnRemoteFailure :server:closeIssueOnRemoteSuccess --continue
+        run: ./gradlew :server:systemTest :server:createIssueOnRemoteFailure :server:closeIssueOnRemoteSuccess --continue --stacktrace
