@@ -37,12 +37,10 @@ abstract class JUnitToMarkdown : DefaultTask() {
 private object Util {
     fun gradleID(issueId: String?) = "[gradleID: $issueId]"
 
-    fun getIssueByTitleId(repo: GHRepository, id: String, authorId: Long): GHIssue? {
+    fun getIssueByTitleId(repo: GHRepository, id: String): GHIssue? {
         val allIssues = repo.getIssues(GHIssueState.ALL)
         val previousIssuesByID = allIssues.filter { issue ->
-            val idTitleMatched = issue.title.endsWith(gradleID(id))
-            val userMatched = issue.user.id == authorId
-            idTitleMatched && userMatched
+            issue.title.endsWith(gradleID(id))
         }
         val currentIssue = previousIssuesByID.firstOrNull { issue ->
             issue.state == GHIssueState.OPEN
@@ -56,12 +54,7 @@ private object Util {
         return currentIssue ?: latestClosedIssue
     }
 
-    fun buildGithub(token: String): AuthGithubStuff {
-        val github = GitHubBuilder().withOAuthToken(token).build()
-        val myself = github.myself
-        println("Logged in as ${myself.name} at ${myself.htmlUrl}")
-        return AuthGithubStuff(github, myself)
-    }
+    fun buildGithub(token: String): GitHub = GitHubBuilder().withOAuthToken(token).build()
 
 }
 private data class AuthGithubStuff(
@@ -98,10 +91,10 @@ abstract class CreateGithubIssue : DefaultTask() {
     fun action() {
         val issueId = uniqueId.get()
         val trimmedTitle = title.get().trim()
-        val (github, myself) = Util.buildGithub(githubToken.get())
+        val github = Util.buildGithub(githubToken.get())
         val repo = github.getRepository("DareFox/HowLongToBeat-Proxy-API")
 
-        val latestIssue = Util.getIssueByTitleId(repo, issueId, myself.id)
+        val latestIssue = Util.getIssueByTitleId(repo, issueId)
         val gradleID = Util.gradleID(issueId)
         if (latestIssue?.state == GHIssueState.OPEN) {
             println("Issue with $gradleID already exists and open")
@@ -146,8 +139,8 @@ abstract class CloseGithubIssue : DefaultTask() {
 
     @TaskAction
     fun action() {
-        val (github, myself) = Util.buildGithub(githubToken.get())
-        val issue = Util.getIssueByTitleId(github.getRepository("DareFox/HowLongToBeat-Proxy-API"), uniqueId.get(), myself.id)
+        val github = Util.buildGithub(githubToken.get())
+        val issue = Util.getIssueByTitleId(github.getRepository("DareFox/HowLongToBeat-Proxy-API"), uniqueId.get())
 
         if (issue == null) {
             println("Can't find any issue to close. Skipping")
