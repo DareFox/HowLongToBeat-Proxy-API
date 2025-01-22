@@ -32,6 +32,12 @@ remoteTest {
     url = URL("https://hltb-proxy.fly.dev")
 }
 
+val markdownReportTask = tasks.register<JUnitToMarkdown>("createMarkdownReport") {
+    junitXmlDir.set(layout.buildDirectory.dir("test-results/systemTest"))
+    markdownOutput.set(layout.buildDirectory.file("markdown/report.md"))
+    filterPattern.set { it.extension == "xml" }
+}
+
 @Suppress("UnstableApiUsage")
 testing.suites.register<JvmTestSuite>("systemTest") {
     dependencies {
@@ -50,18 +56,13 @@ testing.suites.register<JvmTestSuite>("systemTest") {
                 else exclude("Remote*")
             }
             shouldRunAfter("test")
+            finalizedBy(markdownReportTask)
         }
-
     }
 }
 
 val systemTestTask = tasks.named<Test>("systemTest")
 tasks.named("check") { dependsOn(systemTestTask) }
-
-val markdownReportTask = tasks.register<JUnitToMarkdown>("createMarkdownReport") {
-    junitXmlDir.set(systemTestTask.get().reports.junitXml.outputLocation)
-    markdownOutput.set(layout.buildDirectory.file("markdown/report.md"))
-}
 
 val GITHUB_TOKEN = project.objects.property<String>()
 GITHUB_TOKEN.set(System.getenv("GITHUB_TOKEN") ?: System.getProperty("GITHUB_TOKEN"))
@@ -92,7 +93,7 @@ fun CloseGithubIssue.setup() {
 val remoteIssueId = "systemTest-remote-server"
 tasks.register<CreateGithubIssue>("createIssueOnRemoteFailure") {
     setup()
-    onlyIf { systemTestTask.get().state.failure != null }
+    onlyIf { systemTestTask.get().state.failure != null && remoteTest.enabled.get() }
     remoteTest.enabled = true
     title = "Server returns errors"
     uniqueId = remoteIssueId
@@ -100,11 +101,11 @@ tasks.register<CreateGithubIssue>("createIssueOnRemoteFailure") {
 }
 tasks.register<CloseGithubIssue>("closeIssueOnRemoteSuccess") {
     setup()
-    onlyIf { systemTestTask.get().state.failure == null && !remoteTest.enabled.get() }
+    onlyIf { systemTestTask.get().state.failure == null && remoteTest.enabled.get() }
     remoteTest.enabled = true
     uniqueId = remoteIssueId
-    reason = "State has changed. Testing are now passed successfully"
-    mustRunAfter("systemTest-createMarkdownReport")
+    reason = "Status has changed. Testing is now successful."
+    mustRunAfter("createMarkdownReport")
 }
 
 val localIssueId = "systemTest-local-server"
@@ -113,12 +114,12 @@ tasks.register<CreateGithubIssue>("createIssueOnLocalFailure") {
     onlyIf { systemTestTask.get().state.failure != null && remoteTest.enabled.get().not() }
     title = "Local server returns errors"
     uniqueId = localIssueId
-    mustRunAfter("systemTest-createMarkdownReport")
+    mustRunAfter("createMarkdownReport")
 }
 tasks.register<CloseGithubIssue>("closeIssueOnLocalSuccess") {
     setup()
-    onlyIf { systemTestTask.get().state.failure == null && !remoteTest.enabled.get() }
+    onlyIf { systemTestTask.get().state.failure == null && remoteTest.enabled.get().not() }
     uniqueId = localIssueId
-    reason = "State has changed. Testing are now passed successfully"
-    mustRunAfter("systemTest-createMarkdownReport")
+    reason = "Status has changed. Testing is now successful."
+    mustRunAfter("createMarkdownReport")
 }
