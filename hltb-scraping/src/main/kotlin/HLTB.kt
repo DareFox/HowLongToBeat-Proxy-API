@@ -32,7 +32,7 @@ object HLTB {
         var keyIsNotUpdated = true
         lateinit var response: Response
         while (true) {
-            val request = Request(POST, "https://howlongtobeat.com/api/find/${getSearchKey()}")
+            val request = Request(POST, "https://howlongtobeat.com/api/s/${getSearchKey()}")
                 .hltbJsonRequest(url, queryObj)
             val call = httpClient(request)
 
@@ -151,7 +151,7 @@ object HLTB {
     }
 
     private fun findKeyInScripts(scripts: Sequence<String>): String {
-        val fetchLineRegex = "(?<=api/find/).*?,".toRegex()
+        val fetchLineRegex = "(?<=api/s/).*?,".toRegex()
         val concatValuesRegex = "(?<=concat\\(\").*?(?=\")".toRegex()
         for (script in scripts) {
             val fetchLine = fetchLineRegex.find(script) ?: continue
