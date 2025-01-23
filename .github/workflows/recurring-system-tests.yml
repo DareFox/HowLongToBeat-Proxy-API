@@ -17,7 +17,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 23
-          cache: 'gradle'
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
