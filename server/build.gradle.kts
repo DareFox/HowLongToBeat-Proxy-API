@@ -57,6 +57,7 @@ testing.suites.register<JvmTestSuite>("systemTest") {
             }
             shouldRunAfter("test")
             finalizedBy(markdownReportTask)
+            outputs.upToDateWhen { false } // DO NOT CACHE TESTS
         }
     }
 }
